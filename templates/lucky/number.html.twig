@@ -1,2 +1,13 @@
-<h1>Your lucky number is: {{ number }}</h1>
-<h2>Very nice >:D</h2>
+{% extends 'base.html.twig' %}
+
+{% block title %}Lucky number{% endblock %}
+
+{% block main %}
+    <div style="background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet); text-align: center">
+        <br><br><br>
+        <h2>Your lucky number is: </h2>
+        <h1>{{ number }}</h1>
+        <br><br><br>
+        <p style="float: right">🅽🅸🅲🅴</p>
+    </div>
+{% endblock %}

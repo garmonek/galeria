@@ -26,6 +26,7 @@
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
+        "symfony/web-server-bundle": "4.4.*",
         "symfony/yaml": "4.4.*"
     },
     "require-dev": {
@@ -36,8 +37,7 @@
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
-        "symfony/test-pack": "*",
-        "symfony/web-server-bundle": "4.4.*"
+        "symfony/test-pack": "*"
     },
     "config": {
         "preferred-install": {
