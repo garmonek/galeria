@@ -4,14 +4,24 @@
 
 {% block main %}
     <h1>Welcome {{ name }}!</h1>
-    <div style="background-image: linear-gradient(lightpink, lightblue)">
-        <p class="lead">This cosmic dance of bursting decadence and withheld permissions twists all our arms
-        collectively, but if sweetness can win? (and it can) then I'll still be here tomorrow
-        to high five you yesterday, my friend. Peace.
-        -The Old Royal Tart Toter</p>
-    <h3>🅸🅲🅴</h3>
+    <div>
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+            dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+            deserunt mollit anim id est laborum.</p>
     </div>
 
-{#    {{ dump() }}#}
+    <div class="row">
+        {% for image in images %}
+        <div class="col-sm-6 col-md-4 ">
+            <a href="#" class="thumbnail">
+                <img src="/images/{{ image }}" alt="..." class="img-thumbnail">
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    {#    {{ dump() }}#}
 
 {% endblock %}
