@@ -23,15 +23,18 @@
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container">
 
-            <a class="navbar-brand" href="{{ path('welcome') }}">Home</a>
+            <a class="navbar-brand" href="{{ path('home') }}">Strona główna</a>
 
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_lucky_number') }}">Lucky Number</a>
+                        <a class="nav-link" href="{{ path('gallery') }}">Galeria</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('contact') }}">Contact</a>
+                        <a class="nav-link" href="{{ path('app_lucky_number') }}">Niespodzianka</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('contact') }}">Kontakt</a>
                     </li>
                 </ul>
             </div>
@@ -44,7 +47,7 @@
 
     {% include 'flash_messages.html.twig' %}
 
-    {% block main %}{% endblock %}
+    {% block body %}{% endblock %}
 </main>
 
 {% block javascripts %}{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Strona główna{% endblock %}
+
+{% block body %}
+
+    <h2>Najlepsze tapety Wiosna</h2>
+    {% include "home/bestof.html.twig" with { 'images': spring } %}
+
+    <h2>Najlepsze tapety Lato</h2>
+    {% include "home/bestof.html.twig" with { 'images': summer } %}
+
+    <h2>Najlepsze tapety Jesień</h2>
+    {% include "home/bestof.html.twig" with { 'images': autumn } %}
+
+    <h2>Najlepsze tapety Zima</h2>
+    {% include "home/bestof.html.twig" with { 'images': winter } %}
+
+    <h2>Najlepsze tapety Kosmos</h2>
+    {% include "home/bestof.html.twig" with { 'images': space } %}
+
+    <h3>Losowe tapety</h3>
+    <div class="row">
+        {% for image in randomised_images %}
+            <div class="col-sm-6 col-md-3">
+                <img src="/images/{{ image }}" alt="..." class="img-thumbnail"/>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

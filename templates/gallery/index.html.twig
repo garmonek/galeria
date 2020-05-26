@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galeria zdjęć{% endblock %}
+
+{% block body %}
+    <h1>Welcome!</h1>
+    <div>
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+            dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+            deserunt mollit anim id est laborum.</p>
+    </div>
+
+    {# wyświetlanie zdjęć jako galerii #}
+    <div class="row">
+        {% for image in images %}
+            <div class="col-sm-6 col-md-4">
+                <a href="{{ path('view') }}" class="thumbnail">
+                    <img src="/images/{{ image }}" alt="..." class="img-thumbnail">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    {# paginator #}
+    <div class="navigation">
+        {{ knp_pagination_render(images) }}
+    </div>
+
+{% endblock %}
