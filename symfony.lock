@@ -81,6 +81,9 @@
     "doctrine/reflection": {
         "version": "1.2.1"
     },
+    "doctrine/sql-formatter": {
+        "version": "1.0.1"
+    },
     "egulias/email-validator": {
         "version": "2.1.17"
     },
@@ -98,9 +101,6 @@
         "files": [
             "./.php_cs.dist"
         ]
-    },
-    "jdorn/sql-formatter": {
-        "version": "v1.2.17"
     },
     "knplabs/knp-components": {
         "version": "v2.3.5"
