@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+
+            <trans-unit id="home">
+                <source>home</source>
+                <target>Home</target>
+            </trans-unit>
+            <trans-unit id="gallery">
+                <source>gallery</source>
+                <target>Gallery</target>
+            </trans-unit>
+            <trans-unit id="upload">
+                <source>upload</source>
+                <target>Upload</target>
+            </trans-unit>
+            <trans-unit id="best_of_spring">
+                <source>best_of_spring</source>
+                <target>The best of Spring</target>
+            </trans-unit>
+            <trans-unit id="best_of_summer">
+                <source>best_of_summer</source>
+                <target>The best of Summer</target>
+            </trans-unit>
+            <trans-unit id="best_of_autumn">
+                <source>best_of_autumn</source>
+                <target>The best of Autumn</target>
+            </trans-unit>
+            <trans-unit id="best_of_winter">
+                <source>best_of_winter</source>
+                <target>The best of Winter</target>
+            </trans-unit>
+            <trans-unit id="best_of_space">
+                <source>best_of_space</source>
+                <target>The best of Space</target>
+            </trans-unit>
+            <trans-unit id="random_wallpapers">
+                <source>random_wallpapers</source>
+                <target>Random Wallpapers</target>
+            </trans-unit>
+            <trans-unit id="back_to_gallery">
+                <source>back_to_gallery</source>
+                <target>Back to the Gallery</target>
+            </trans-unit>
+            <trans-unit id="send">
+                <source>send</source>
+                <target>Send</target>
+            </trans-unit>
+            <trans-unit id="upload_new_wallpaper">
+                <source>upload_new_wallpaper</source>
+                <target>Upload a new Wallpaper</target>
+            </trans-unit>
+            <trans-unit id="welcome_gallery">
+                <source>welcome_gallery</source>
+                <target>Welcome to the Gallery</target>
+            </trans-unit>
+            <trans-unit id="label_wallpaper">
+                <source>label_wallpaper</source>
+                <target>Wallpaper</target>
+            </trans-unit>
+            <trans-unit id="message_created_successfully">
+                <source>message_created_successfully</source>
+                <target>Wallpaper uploaded successfully!</target>
+            </trans-unit>
+
+
+
+        </body>
+    </file>
+</xliff>

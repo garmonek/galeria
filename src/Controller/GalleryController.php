@@ -58,4 +58,16 @@ class GalleryController extends AbstractController
             'images' => $pagination
         ]);
     }
+    /**
+     * @Route("/gallery/view", name="view")
+     */
+    public function viewer()
+    {
+        $image = 'spring-blue_gray_gnatcatcher_bird_spring-wallpaper-1920x1080.jpg';
+
+        return $this->render('gallery/viewer.html.twig', [
+            'controller_name' => 'DetailController',
+            'image' => $image,
+        ]);
+    }
 }

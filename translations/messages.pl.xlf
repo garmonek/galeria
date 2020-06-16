@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="pl" datatype="plaintext" original="file.ext">
+        <body>
+
+            <trans-unit id="home">
+                <source>home</source>
+                <target>Strona główna</target>
+            </trans-unit>
+            <trans-unit id="gallery">
+                <source>gallery</source>
+                <target>Galeria</target>
+            </trans-unit>
+            <trans-unit id="upload">
+                <source>upload</source>
+                <target>Prześlij</target>
+            </trans-unit>
+            <trans-unit id="best_of_spring">
+                <source>best_of_spring</source>
+                <target>Najlepsze tapety Wiosna</target>
+            </trans-unit>
+            <trans-unit id="best_of_summer">
+                <source>best_of_summer</source>
+                <target>Najlepsze tapety Lato</target>
+            </trans-unit>
+            <trans-unit id="best_of_autumn">
+                <source>best_of_autumn</source>
+                <target>Najlepsze tapety Jesień</target>
+            </trans-unit>
+            <trans-unit id="best_of_winter">
+                <source>best_of_winter</source>
+                <target>Najlepsze tapety Zima</target>
+            </trans-unit>
+            <trans-unit id="best_of_space">
+                <source>best_of_space</source>
+                <target>Najlepsze tapety Kosmos</target>
+            </trans-unit>
+            <trans-unit id="random_wallpapers">
+                <source>random_wallpapers</source>
+                <target>Losowe tapety</target>
+            </trans-unit>
+            <trans-unit id="back_to_gallery">
+                <source>back_to_gallery</source>
+                <target>Powrót do galerii</target>
+            </trans-unit>
+            <trans-unit id="send">
+                <source>send</source>
+                <target>Wyślij</target>
+            </trans-unit>
+            <trans-unit id="upload_new_wallpaper">
+                <source>upload_new_wallpaper</source>
+                <target>Prześlij nową tapetę</target>
+            </trans-unit>
+            <trans-unit id="welcome_gallery">
+                <source>welcome_gallery</source>
+                <target>Witamy w galerii</target>
+            </trans-unit>
+            <trans-unit id="label_wallpaper">
+                <source>label_wallpaper</source>
+                <target>Tapeta</target>
+            </trans-unit>
+            <trans-unit id="message_created_successfully">
+                <source>message_created_successfully</source>
+                <target>Tapeta została przesłana!</target>
+            </trans-unit>
+
+
+
+        </body>
+    </file>
+</xliff>
