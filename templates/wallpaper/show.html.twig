@@ -19,6 +19,10 @@
             <dd>{{ wallpaper.createdAt|date('d.m.Y') }}</dd>
             <dt>{{ 'label_updated_at'|trans }}</dt>
             <dd>{{ wallpaper.updatedAt|date('d.m.Y') }}</dd>
+            <dt>{{ 'label_category'|trans }}</dt>
+            <dd>{{  wallpaper.category.title }}</dd>
+            <dt>{{ 'label_description'|trans }}</dt>
+            <dd>{{  wallpaper.description }}</dd>
         </dl>
         <p>
             <a href="{{ url('wallpaper_index') }}" title="{{ 'action_back_to_list'|trans }}" class="btn btn-primary">

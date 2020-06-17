@@ -23,6 +23,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'wallpaper.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_updated_at'|trans, 'wallpaper.updatedAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_filename'|trans, 'wallpaper.filename') }}</th>
+                <th>{{ 'label_category'|trans }}</th>
                 <th>{{ 'label_actions'|trans }}</th>
             </tr>
             </thead>
@@ -33,6 +34,7 @@
                     <td>{{ wallpaper.createdAt|date('d.m.Y') }}</td>
                     <td>{{ wallpaper.updatedAt|date('d.m.Y') }}</td>
                     <td>{{ wallpaper.filename }}</td>
+                    <td>{{ wallpaper.category.title }}</td>
                     <td>
                         <a href="{{ url('wallpaper_show', {id: wallpaper.id}) }}" title="{{ 'action_view'|trans }}" class="btn btn-info">
                             {{ 'action_view'|trans }}
