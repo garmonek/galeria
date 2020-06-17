@@ -9,6 +9,7 @@ use App\Entity\Wallpaper;
 use App\Form\WallpaperType;
 use App\Repository\WallpaperRepository;
 use App\Service\FileUploader;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,10 +45,59 @@ class WallpaperController extends AbstractController
     private $filesystem;
 
     /**
+     * Index action.
+     *
+     * @param \App\Repository\WallpaperRepository $wallpaperRepository Wallpaper repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @Route(
+     *     "/",
+     *     methods={"GET"},
+     *     name="wallpaper_index",
+     * )
+     */
+    public function index(Request $request, WallpaperRepository $wallpaperRepository, PaginatorInterface $paginator): Response
+    {
+        $pagination = $paginator->paginate(
+            $wallpaperRepository->queryAll(),
+            $request->query->getInt('page', 1),
+            WallpaperRepository::PAGINATOR_ITEMS_PER_PAGE
+        );
+
+        return $this->render(
+            'wallpaper/index.html.twig',
+            ['pagination' => $pagination]
+        );
+    }
+
+    /**
+     * Show action.
+     *
+     * @param \App\Entity\Wallpaper $wallpaper Wallpaper entity
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @Route(
+     *     "/{id}",
+     *     methods={"GET"},
+     *     name="wallpaper_show",
+     *     requirements={"id": "[1-9]\d*"},
+     * )
+     */
+    public function show(Wallpaper $wallpaper): Response
+    {
+        return $this->render(
+            'wallpaper/show.html.twig',
+            ['wallpaper' => $wallpaper]
+        );
+    }
+
+    /**
      * WallpaperController constructor.
      *
      * @param \App\Repository\WallpaperRepository $wallpaperRepository Wallpaper repository
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem       Filesystem component
+     * @param \Symfony\Component\Filesystem\Filesystem $filesystem Filesystem component
      * @param \App\Service\FileUploader $fileUploader File uploader
      */
     public function __construct(WallpaperRepository $wallpaperRepository, Filesystem $filesystem, FileUploader $fileUploader)
@@ -85,13 +135,15 @@ class WallpaperController extends AbstractController
             );
             $wallpaper->setFilename($wallpaperFilename);
             $wallpaper->setSlug(pathinfo($wallpaperFilename, PATHINFO_FILENAME));
+            $wallpaper->setCreatedAt(new \DateTime());
+            $wallpaper->setUpdatedAt(new \DateTime());
             $this->wallpaperRepository->save($wallpaper);
             $this->getDoctrine()->getManager()->persist($form->getData());
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'message_created_successfully');
 
-            return $this->redirectToRoute('gallery');
+            return $this->redirectToRoute('wallpaper_index');
         }
 
         return $this->render(

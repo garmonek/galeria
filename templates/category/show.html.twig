@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_category_details'|trans({'%id%': category.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_category_details'|trans({'%id%': category.id|default('')}) }}</h1>
+    {% if category is defined and category|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label_id'|trans }}</dt>
+            <dd>{{ category.id }}</dd>
+            <dt>{{ 'label_created_at'|trans }}</dt>
+            <dd>{{ category.createdAt|date('d.m.Y') }}</dd>
+            <dt>{{ 'label_updated_at'|trans }}</dt>
+            <dd>{{ category.updatedAt|date('d.m.Y') }}</dd>
+            <dt>{{ 'label_title'|trans }}</dt>
+            <dd>{{  category.title }}</dd>
+        </dl>
+        <p>
+            <a href="{{ url('category_edit',{'id': category.id|default('')}) }}" title="{{ 'action_edit'|trans }}" class="btn btn-secondary">
+                {{ 'action_edit'|trans }}
+            </a>
+            <a href="{{ url('category_delete',{'id': category.id|default('')}) }}" title="{{ 'action_delete'|trans }}" class="btn btn-danger">
+                {{ 'action_delete'|trans }}
+            </a>
+        </p>
+        <p>
+            <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list'|trans }}" class="btn btn-primary">
+                {{ 'action_back_to_list'|trans }}
+            </a>
+        </p>
+    {% else %}
+        <div class="alert alert-primary" role="alert">
+            {{ 'message_item_not_found'|trans }}
+        </div>
+    {% endif %}
+{% endblock %}

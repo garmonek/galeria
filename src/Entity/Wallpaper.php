@@ -6,6 +6,7 @@
 namespace App\Entity;
 
 use App\Repository\WallpaperRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,10 +48,42 @@ class Wallpaper
      * @ORM\Column(
      *     type="string",
      *     length=255,
-     *     nullable=true
      * )
      */
     private $slug;
+
+    /**
+     * Created at.
+     *
+     * @var DateTimeInterface
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * Updated at.
+     *
+     * @var DateTimeInterface
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
+    /**
+     * Category.
+     *
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="wallpapers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
+    /**
+     * Description.
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
 
     /**
      * Getter for Id.
@@ -102,6 +135,96 @@ class Wallpaper
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Getter for createdAt.
+     *
+     * @return \DateTimeInterface|null Created at
+     */
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Setter for createdAt.
+     *
+     * @param \DateTimeInterface $createdAt Created at
+     */
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Getter for updatedAt.
+     *
+     * @return \DateTimeInterface|null Updated at
+     */
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Setter for updatedAt.
+     *
+     * @param \DateTimeInterface|null $updatedAt Updated at
+     */
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Getter for Category.
+     *
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * Setter for Category.
+     *
+     * @param Category|null $category
+     * @return $this
+     */
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Getter for Description.
+     *
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * Setter for Description.
+     *
+     * @param string|null $description
+     * @return $this
+     */
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

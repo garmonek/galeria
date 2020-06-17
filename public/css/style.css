@@ -5,3 +5,21 @@
 .img-thumbnail {
     margin-bottom: 20px;
 }
+
+h1 {
+    color: navy;
+}
+
+footer {
+    position: static;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 85%;
+}
+
+#empty_message {
+    position: relative;
+    top: 200px;
+}

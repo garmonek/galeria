@@ -5,8 +5,11 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Wallpaper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -32,28 +35,34 @@ class WallpaperType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(
-                'file',
-                FileType::class,
-                [
-                'mapped' => false,
-                'label' => 'label_wallpaper',
-                'required' => true,
-                'constraints' => new Image(
-                    [
-                        'maxSize' => '8196k',
-                        'mimeTypes' => [
-                            'image/png',
-                            'image/jpeg',
-                            'image/pjpeg',
-                            'image/jpeg',
-                            'image/pjpeg',
-                        ],
-                        'mimeTypesMessage' => 'Unsupported Image File',
-                    ]
-                ),
+            ->add('file', FileType::class, [
+                    'mapped' => false,
+                    'label' => 'label_wallpaper',
+                    'required' => true,
+                    'constraints' => new Image(
+                        [
+                            'maxSize' => '8196k',
+                            'mimeTypes' => [
+                                'image/png',
+                                'image/jpeg',
+                                'image/pjpeg',
+                                'image/jpeg',
+                                'image/pjpeg',
+                            ],
+                            'mimeTypesMessage' => 'Unsupported Image File',
+                        ]
+                    ),
                 ]
-            );
+            )
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'label' => 'label_category',
+                'placeholder' => 'choose_category',
+                'required' => true,
+                'choice_label' => function ($category) {
+                    return $category->getTitle();
+                }
+            ]);
     }
 
     /**

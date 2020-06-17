@@ -1,7 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello WallpaperController!{% endblock %}
+{% block title %}
+    {{ 'title_wallpaper_list'|trans }}
+{% endblock %}
 
 {% block body %}
 
+    <h1>{{ 'title_wallpaper_list'|trans }}</h1>
+    <a href="{{ url('wallpaper_create') }}" title="{{ 'upload_new_wallpaper'|trans }}" class="btn btn-primary float-sm-right">
+        {{ 'upload_new_wallpaper'|trans }}
+    </a>
+    {% if pagination is defined and pagination.items|length %}
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label_id'|trans, 'wallpaper.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'wallpaper.createdAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_updated_at'|trans, 'wallpaper.updatedAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_filename'|trans, 'wallpaper.filename') }}</th>
+                <th>{{ 'label_actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for wallpaper in pagination.items %}
+                <tr>
+                    <td>{{ wallpaper.id }}</td>
+                    <td>{{ wallpaper.createdAt|date('d.m.Y') }}</td>
+                    <td>{{ wallpaper.updatedAt|date('d.m.Y') }}</td>
+                    <td>{{ wallpaper.filename }}</td>
+                    <td>
+                        <a href="{{ url('wallpaper_show', {id: wallpaper.id}) }}" title="{{ 'action_view'|trans }}" class="btn btn-info">
+                            {{ 'action_view'|trans }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    {% else %}
+        <p>
+            {{ 'message_empty_list'|trans }}
+        </p>
+    {% endif %}
 {% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_wallpaper_details'|trans({'%id%': wallpaper.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_wallpaper_details'|trans({'%id%': wallpaper.id|default('')}) }}</h1>
+    {% if wallpaper is defined and wallpaper|length %}
+        <img src="{{ asset('images/') ~ wallpaper.filename }}" alt="..." class="img-thumbnail">
+        <dl class="dl-horizontal">
+            <dt>{{ 'label_id'|trans }}</dt>
+            <dd>{{ wallpaper.id }}</dd>
+            <dt>{{ 'label_slug'|trans }}</dt>
+            <dd>{{ wallpaper.slug }}</dd>
+            <dt>{{ 'label_filename'|trans }}</dt>
+            <dd>{{  wallpaper.filename }}</dd>
+            <dt>{{ 'label_created_at'|trans }}</dt>
+            <dd>{{ wallpaper.createdAt|date('d.m.Y') }}</dd>
+            <dt>{{ 'label_updated_at'|trans }}</dt>
+            <dd>{{ wallpaper.updatedAt|date('d.m.Y') }}</dd>
+        </dl>
+        <p>
+            <a href="{{ url('wallpaper_index') }}" title="{{ 'action_back_to_list'|trans }}" class="btn btn-primary">
+                {{ 'action_back_to_list'|trans }}
+            </a>
+        </p>
+
+    {% else %}
+        <p>
+            {{ 'message_item_not_found'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}
