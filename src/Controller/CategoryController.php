@@ -8,7 +8,9 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\Mapping\Id;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,7 +58,10 @@ class CategoryController extends AbstractController
      *
      * @param \App\Entity\Category $category Category entity
      *
+     * @param $id
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @ParamConverter("Id", options={"mapping": {"category_id" : "id"}})
      *
      * @Route(
      *     "/{id}",
@@ -65,11 +70,20 @@ class CategoryController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      * )
      */
-    public function show(Category $category): Response
+    public function show(Category $category, $id): Response
     {
+        $category = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->find($id);
+
+        $wallpaper = $category->getWallpapers();
+
         return $this->render(
             'category/show.html.twig',
-            ['category' => $category]
+            [
+                'category' => $category,
+                'wallpaper' => $wallpaper,
+            ]
         );
     }
 

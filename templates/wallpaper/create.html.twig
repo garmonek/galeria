@@ -1,16 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'upload'|trans }}{% endblock %}
+{% block title %}
+    {{ 'upload_new_wallpaper'|trans }}
+{% endblock %}
 
 {% block body %}
 
     <h1>{{ 'upload_new_wallpaper'|trans }}</h1>
 
-    {{ form_start(form) }}
+    {{ form_start(form, { method: 'POST', action: url('wallpaper_create') }) }}
     {{ form_widget(form) }}
     <button type="submit" class="btn btn-primary float-right">{{ 'send'|trans }}</button>
     {{ form_end(form) }}
 
-    <a href="{{ path('wallpaper_index') }}">{{ 'back_to_gallery'|trans }}</a>
+    <a href="{{ path('wallpaper_index') }}" class="btn btn-secondary">{{ 'back_to_gallery'|trans }}</a>
 
 {% endblock %}

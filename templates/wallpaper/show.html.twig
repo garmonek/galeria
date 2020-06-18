@@ -11,8 +11,8 @@
         <dl class="dl-horizontal">
             <dt>{{ 'label_id'|trans }}</dt>
             <dd>{{ wallpaper.id }}</dd>
-            <dt>{{ 'label_slug'|trans }}</dt>
-            <dd>{{ wallpaper.slug }}</dd>
+            <dt>{{ 'label_title'|trans }}</dt>
+            <dd>{{ wallpaper.title }}</dd>
             <dt>{{ 'label_filename'|trans }}</dt>
             <dd>{{  wallpaper.filename }}</dd>
             <dt>{{ 'label_created_at'|trans }}</dt>
@@ -25,8 +25,19 @@
             <dd>{{  wallpaper.description }}</dd>
         </dl>
         <p>
-            <a href="{{ url('wallpaper_index') }}" title="{{ 'action_back_to_list'|trans }}" class="btn btn-primary">
-                {{ 'action_back_to_list'|trans }}
+            <a href="{{ url('wallpaper_edit',{'id': wallpaper.id|default('')}) }}" title="{{ 'action_edit'|trans }}" class="btn btn-primary">
+                {{ 'action_edit'|trans }}
+            </a>
+            <a href="{{ url('wallpaper_delete',{'id': wallpaper.id|default('')}) }}" title="{{ 'action_delete'|trans }}" class="btn btn-danger">
+                {{ 'action_delete'|trans }}
+            </a>
+        </p>
+        <p>
+            <a href="{{ url('wallpaper_index') }}" title="{{ 'action_back_to_list_wallpaper'|trans }}" class="btn btn-secondary">
+                {{ 'action_back_to_list_wallpaper'|trans }}
+            </a>
+            <a href="{{ url('category_show', {id: wallpaper.category.id}) }}" title="{{ 'action_back_to_gallery'|trans }}" class="btn btn-secondary">
+                {{ 'action_back_to_gallery'|trans }}
             </a>
         </p>
 

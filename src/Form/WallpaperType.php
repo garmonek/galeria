@@ -9,10 +9,9 @@ use App\Entity\Category;
 use App\Entity\Wallpaper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
@@ -39,7 +38,7 @@ class WallpaperType extends AbstractType
             ->add('file', FileType::class, [
                 'mapped' => false,
                 'label' => 'label_wallpaper',
-                'required' => true,
+                'required' => is_null($builder->getData()->getId()),
                 'constraints' => new Image(
                     [
                         'maxSize' => '8196k',
@@ -53,6 +52,11 @@ class WallpaperType extends AbstractType
                         'mimeTypesMessage' => 'Unsupported Image File',
                     ]
                 ),
+            ])
+            ->add('title', TextType::class, [
+                'label' => 'label_title',
+                'required' => true,
+                'attr' => ['max_length' => 64],
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,

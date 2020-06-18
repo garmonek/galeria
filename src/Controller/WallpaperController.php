@@ -12,6 +12,7 @@ use App\Service\FileUploader;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -134,7 +135,6 @@ class WallpaperController extends AbstractController
                 $form->get('file')->getData()
             );
             $wallpaper->setFilename($wallpaperFilename);
-            $wallpaper->setSlug(pathinfo($wallpaperFilename, PATHINFO_FILENAME));
             $wallpaper->setCreatedAt(new \DateTime());
             $wallpaper->setUpdatedAt(new \DateTime());
             $this->wallpaperRepository->save($wallpaper);
@@ -150,6 +150,92 @@ class WallpaperController extends AbstractController
             'wallpaper/create.html.twig',
             ['form' => $form->createView()]
 
+        );
+    }
+
+    /**
+     * Edit action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request  $request            HTTP request
+     * @param \App\Entity\Wallpaper                      $wallpaper           Wallpaper entity
+     * @param \App\Repository\WallpaperRepository        $wallpaperRepository Wallpaper repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *     "/{id}/edit",
+     *     methods={"GET", "PUT"},
+     *     requirements={"id": "[1-9]\d*"},
+     *     name="wallpaper_edit",
+     * )
+     */
+    public function edit(Request $request, Wallpaper $wallpaper, WallpaperRepository $wallpaperRepository): Response
+    {
+        $form = $this->createForm(WallpaperType::class, $wallpaper, ['method' => 'PUT']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $wallpaper->setUpdatedAt(new \DateTime());
+            $wallpaperRepository->save($wallpaper);
+
+            $this->addFlash('success', 'message_updated_successfully');
+
+            return $this->redirectToRoute('wallpaper_index');
+        }
+
+        return $this->render(
+            'wallpaper/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'wallpaper' => $wallpaper,
+            ]
+        );
+    }
+
+    /**
+     * Delete action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
+     * @param \App\Entity\Wallpaper                      $wallpaper           Wallpaper entity
+     * @param \App\Repository\WallpaperRepository        $wallpaperRepository Wallpaper repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *     "/{id}/delete",
+     *     methods={"GET", "DELETE"},
+     *     requirements={"id": "[1-9]\d*"},
+     *     name="wallpaper_delete",
+     * )
+     */
+    public function delete(Request $request, Wallpaper $wallpaper, WallpaperRepository $wallpaperRepository): Response
+    {
+        $form = $this->createForm(FormType::class, $wallpaper, ['method' => 'DELETE']);
+        $form->handleRequest($request);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $wallpaperRepository->delete($wallpaper);
+            $this->addFlash('success', 'message.deleted_successfully');
+
+            return $this->redirectToRoute('wallpaper_index');
+        }
+
+        return $this->render(
+            'wallpaper/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'wallpaper' => $wallpaper,
+            ]
         );
     }
 }

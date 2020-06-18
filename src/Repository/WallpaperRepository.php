@@ -92,9 +92,31 @@ class WallpaperRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Wallpaper $wallpaper
+     * Save record.
+     *
+     * @param \App\Entity\Wallpaper $wallpaper Wallpaper entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function save(Wallpaper $wallpaper)
+    public function save(Wallpaper $wallpaper): void
     {
+        $this->_em->persist($wallpaper);
+        $this->_em->flush($wallpaper);
+    }
+
+
+    /**
+     * Delete record.
+     *
+     * @param \App\Entity\Wallpaper $wallpaper Wallpaper entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function delete(Wallpaper $wallpaper): void
+    {
+        $this->_em->remove($wallpaper);
+        $this->_em->flush($wallpaper);
     }
 }

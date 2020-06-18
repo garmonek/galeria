@@ -64,6 +64,9 @@ class Category
      */
     private $wallpapers;
 
+    /**
+     * Category constructor.
+     */
     public function __construct()
     {
         $this->wallpapers = new ArrayCollection();
@@ -140,6 +143,8 @@ class Category
     }
 
     /**
+     * Getter for Wallpapers.
+     *
      * @return Collection|Wallpaper[]
      */
     public function getWallpapers(): Collection
@@ -147,6 +152,12 @@ class Category
         return $this->wallpapers;
     }
 
+    /**
+     * Adder Wallpapers.
+     *
+     * @param Wallpaper $wallpaper
+     * @return $this
+     */
     public function addWallpaper(Wallpaper $wallpaper): self
     {
         if (!$this->wallpapers->contains($wallpaper)) {
@@ -157,6 +168,12 @@ class Category
         return $this;
     }
 
+    /**
+     * Removal Wallpapers.
+     *
+     * @param Wallpaper $wallpaper
+     * @return $this
+     */
     public function removeWallpaper(Wallpaper $wallpaper): self
     {
         if ($this->wallpapers->contains($wallpaper)) {

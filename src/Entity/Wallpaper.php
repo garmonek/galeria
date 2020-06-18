@@ -41,16 +41,16 @@ class Wallpaper
     private $filename;
 
     /**
-     * Slug.
+     * Title.
      *
      * @var string
      *
      * @ORM\Column(
      *     type="string",
-     *     length=255,
+     *     length=64,
      * )
      */
-    private $slug;
+    private $title;
 
     /**
      * Created at.
@@ -118,25 +118,23 @@ class Wallpaper
     }
 
     /**
-     * Getter for Slug.
+     * Getter for Title.
      *
-     * @return string|null Slug
+     * @return string|null Title
      */
-    public function getSlug(): ?string
+    public function getTitle(): ?string
     {
-        return $this->slug;
+        return $this->title;
     }
 
     /**
-     * Setter for Slug.
+     * Setter for Title.
      *
-     * @param string $slug Slug
+     * @param string $title Title
      */
-    public function setSlug(string $slug): self
+    public function setTitle(string $title): void
     {
-        $this->slug = $slug;
-
-        return $this;
+        $this->title = $title;
     }
 
     /**

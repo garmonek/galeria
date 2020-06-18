@@ -5,16 +5,15 @@
 {% endblock %}
 
 {% block body %}
-
-    <h1>{{ 'title_wallpaper_list'|trans }}</h1>
+    <h1 class="float-sm-left">{{ 'title_wallpaper_list'|trans }}</h1>
     <a href="{{ url('wallpaper_create') }}" title="{{ 'upload_new_wallpaper'|trans }}" class="btn btn-primary float-sm-right">
         {{ 'upload_new_wallpaper'|trans }}
     </a>
     {% if pagination is defined and pagination.items|length %}
 
-    <div class="navigation text-center">
+    {# <div class="navigation text-center">
         {{ knp_pagination_render(pagination) }}
-    </div>
+    </div> #}
 
         <table class="table table-striped">
             <thead>
@@ -22,7 +21,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label_id'|trans, 'wallpaper.id') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'wallpaper.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_updated_at'|trans, 'wallpaper.updatedAt') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label_filename'|trans, 'wallpaper.filename') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'wallpaper.title') }}</th>
                 <th>{{ 'label_category'|trans }}</th>
                 <th>{{ 'label_actions'|trans }}</th>
             </tr>
@@ -33,7 +32,7 @@
                     <td>{{ wallpaper.id }}</td>
                     <td>{{ wallpaper.createdAt|date('d.m.Y') }}</td>
                     <td>{{ wallpaper.updatedAt|date('d.m.Y') }}</td>
-                    <td>{{ wallpaper.filename }}</td>
+                    <td>{{ wallpaper.title }}</td>
                     <td>{{ wallpaper.category.title }}</td>
                     <td>
                         <a href="{{ url('wallpaper_show', {id: wallpaper.id}) }}" title="{{ 'action_view'|trans }}" class="btn btn-info">
