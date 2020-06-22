@@ -15,8 +15,8 @@
         <a href="{{ url('category_show',{'id': category.id|default('')}) }}" class="btn btn-secondary">
             {{ 'action_back_to_show'|trans }}
         </a>
-        <a href="{{ url('category_index') }}" class="btn btn-primary">
-            {{ 'action_back_to_list'|trans }}
+        <a href="{{ url('category_index') }}" class="btn btn-secondary">
+            {{ 'action_back_to_list_category'|trans }}
         </a>
     </div>
     {{ form_end(form) }}

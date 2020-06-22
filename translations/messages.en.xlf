@@ -129,7 +129,7 @@
             </trans-unit>
             <trans-unit id="title_category_delete">
                 <source>title_category_delete</source>
-                <target>Delete category</target>
+                <target>Delete category #%id%</target>
             </trans-unit>
             <trans-unit id="action_back_to_show">
                 <source>action_back_to_show</source>
@@ -137,7 +137,7 @@
             </trans-unit>
             <trans-unit id="title_category_edit">
                 <source>title_category_edit</source>
-                <target>Edit category</target>
+                <target>Edit category #%id%</target>
             </trans-unit>
             <trans-unit id="label_title">
                 <source>label_title</source>
@@ -145,7 +145,7 @@
             </trans-unit>
             <trans-unit id="title_category_details">
                 <source>title_category_details</source>
-                <target>Category details</target>
+                <target>Category details #%id%</target>
             </trans-unit>
             <trans-unit id="action_edit">
                 <source>action_edit</source>
@@ -161,11 +161,11 @@
             </trans-unit>
             <trans-unit id="title_wallpaper_delete">
                 <source>title_wallpaper_delete</source>
-                <target>Delete wallpaper</target>
+                <target>Delete wallpaper #%id%</target>
             </trans-unit>
             <trans-unit id="title_wallpaper_edit">
                 <source>title_wallpaper_edit</source>
-                <target>Edit wallpaper</target>
+                <target>Edit wallpaper #%id%</target>
             </trans-unit>
             <trans-unit id="label_category">
                 <source>label_category</source>
@@ -178,6 +178,26 @@
             <trans-unit id="action_back_to_gallery">
                 <source>action_back_to_gallery</source>
                 <target>Back to the gallery</target>
+            </trans-unit>
+            <trans-unit id="choose_category">
+                <source>choose_category</source>
+                <target>Choose category</target>
+            </trans-unit>
+            <trans-unit id="message_updated_successfully">
+                <source>message_updated_successfully</source>
+                <target>Updated successfully</target>
+            </trans-unit>
+            <trans-unit id="message.deleted_successfully">
+                <source>message.deleted_successfully</source>
+                <target>Deleted successfully</target>
+            </trans-unit>
+            <trans-unit id="caution_category_delete">
+                <source>caution_category_delete</source>
+                <target>Caution! Are you sure you want to delete this category? You'll also delete all the wallpapers associated with this category.</target>
+            </trans-unit>
+            <trans-unit id="caution_wallpaper_delete">
+                <source>caution_wallpaper_delete</source>
+                <target>Caution! Are you sure you want to delete this wallpaper?</target>
             </trans-unit>
 
         </body>

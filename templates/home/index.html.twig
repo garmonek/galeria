@@ -4,28 +4,6 @@
 
 {% block body %}
 
-    <h2>{{ 'best_of_spring'|trans }}</h2>
-    {% include "home/bestof.html.twig" with { 'images': spring } %}
-
-    <h2>{{ 'best_of_summer'|trans }}</h2>
-    {% include "home/bestof.html.twig" with { 'images': summer } %}
-
-    <h2>{{ 'best_of_autumn'|trans }}</h2>
-    {% include "home/bestof.html.twig" with { 'images': autumn } %}
-
-    <h2>{{ 'best_of_winter'|trans }}</h2>
-    {% include "home/bestof.html.twig" with { 'images': winter } %}
-
-    <h2>{{ 'best_of_space'|trans }}</h2>
-    {% include "home/bestof.html.twig" with { 'images': space } %}
-
-    <h3>{{ 'random_wallpapers'|trans }}</h3>
-    <div class="row">
-        {% for image in randomised_images %}
-            <div class="col-sm-6 col-md-3">
-                <img src="/images/{{ image }}" alt="..." class="img-thumbnail"/>
-            </div>
-        {% endfor %}
-    </div>
+    <h1 style="text-align: center">Witam!</h1>
 
 {% endblock %}

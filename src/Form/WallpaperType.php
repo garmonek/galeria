@@ -70,6 +70,7 @@ class WallpaperType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'label_description',
                 'required' => false,
+                'attr' => ['max_length' => 1000],
             ]);
     }
 

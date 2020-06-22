@@ -74,7 +74,7 @@ class Wallpaper
      * Category.
      *
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="wallpapers")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $category;
 

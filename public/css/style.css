@@ -10,6 +10,10 @@ h1 {
     color: navy;
 }
 
+h3 {
+    color: red;
+}
+
 footer {
     position: static;
     left: 0;

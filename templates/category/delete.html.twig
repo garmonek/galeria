@@ -6,18 +6,20 @@
 
 {% block body %}
     <h1>{{ 'title_category_delete'|trans({'%id%': category.id|default('')}) }}</h1>
+    <h3>{{ 'caution_category_delete'|trans }}</h3>
     {{ form_start(form, { method: 'DELETE', action: url('category_delete', {id: category.id}) }) }}
     {{ form_widget(form) }}
     <div class="form-group row float-sm-right">
-        <input type="submit" value="{{ 'action_save'|trans }}" class="btn btn-danger" />
+        <input type="submit" value="{{ 'action_delete'|trans }}" class="btn btn-danger" />
     </div>
     <div class="form-group float-sm-left">
         <a href="{{ url('category_show',{'id': category.id|default('')}) }}" class="btn btn-secondary">
             {{ 'action_back_to_show'|trans }}
         </a>
-        <a href="{{ url('category_index') }}" class="btn btn-primary">
-            {{ 'action_back_to_list'|trans }}
+        <a href="{{ url('category_index') }}" class="btn btn-secondary">
+            {{ 'action_back_to_list_category'|trans }}
         </a>
     </div>
     {{ form_end(form) }}
+
 {% endblock %}

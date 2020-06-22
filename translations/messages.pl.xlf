@@ -129,15 +129,15 @@
             </trans-unit>
             <trans-unit id="title_category_delete">
                 <source>title_category_delete</source>
-                <target>Usuń kategorię</target>
+                <target>Usuń kategorię #%id%</target>
             </trans-unit>
             <trans-unit id="action_back_to_show">
                 <source>action_back_to_show</source>
-                <target>Powrót to wystawy</target>
+                <target>Powrót to szczegółów</target>
             </trans-unit>
             <trans-unit id="title_category_edit">
                 <source>title_category_edit</source>
-                <target>Edytuj kategorię</target>
+                <target>Edytuj kategorię #%id%</target>
             </trans-unit>
             <trans-unit id="label_title">
                 <source>label_title</source>
@@ -145,7 +145,7 @@
             </trans-unit>
             <trans-unit id="title_category_details">
                 <source>title_category_details</source>
-                <target>Szczegóły kategorii</target>
+                <target>Szczegóły kategorii #%id%</target>
             </trans-unit>
             <trans-unit id="action_edit">
                 <source>action_edit</source>
@@ -161,11 +161,11 @@
             </trans-unit>
             <trans-unit id="title_wallpaper_delete">
                 <source>title_wallpaper_delete</source>
-                <target>Usuń tapetę</target>
+                <target>Usuń tapetę #%id%</target>
             </trans-unit>
             <trans-unit id="title_wallpaper_edit">
                 <source>title_wallpaper_edit</source>
-                <target>Edytuj tapetę</target>
+                <target>Edytuj tapetę #%id%</target>
             </trans-unit>
             <trans-unit id="label_category">
                 <source>label_category</source>
@@ -178,6 +178,26 @@
             <trans-unit id="action_back_to_gallery">
                 <source>action_back_to_gallery</source>
                 <target>Powrót do galerii</target>
+            </trans-unit>
+            <trans-unit id="choose_category">
+                <source>choose_category</source>
+                <target>Wybierz kategorię</target>
+            </trans-unit>
+            <trans-unit id="message_updated_successfully">
+                <source>message_updated_successfully</source>
+                <target>Zaktualizowano!</target>
+            </trans-unit>
+            <trans-unit id="message.deleted_successfully">
+                <source>message.deleted_successfully</source>
+                <target>Usunięto!</target>
+            </trans-unit>
+            <trans-unit id="caution_category_delete">
+                <source>caution_category_delete</source>
+                <target>Uwaga! Czy na pewno chcesz usunąć tę kategorię? Usuniesz również wszystkie tapety powiązane z tą kategorią.</target>
+            </trans-unit>
+            <trans-unit id="caution_wallpaper_delete">
+                <source>caution_wallpaper_delete</source>
+                <target>Uwaga! Czy na pewno chcesz usunąć tę tapetę?</target>
             </trans-unit>
 
         </body>

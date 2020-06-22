@@ -43,7 +43,7 @@
         {% for wallpaper in wallpaper %}
             <div class="col-sm-6 col-md-4">
                 <a href="{{ url('wallpaper_show', {id: wallpaper.id}) }}" class="thumbnail">
-                    <img src="/images/{{ wallpaper.filename }}" alt="..." class="img-thumbnail">
+                    <img src="{{ asset('images/') ~ wallpaper.filename }}" alt="..." class="img-thumbnail">
                 </a>
             </div>
         {% endfor %}

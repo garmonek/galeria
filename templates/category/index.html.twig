@@ -34,7 +34,7 @@
                     <td>{{ category.updatedAt|date('d.m.Y') }}</td>
                     <td>{{ category.title }}</td>
                     <td>
-                        <a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action_view'|trans }}">
+                        <a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action_view'|trans }}" class="btn btn-info">
                             {{ 'action_view'|trans }}
                         </a>
                     </td>
