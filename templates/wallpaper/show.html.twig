@@ -24,6 +24,7 @@
             <dt>{{ 'label_description'|trans }}</dt>
             <dd>{{  wallpaper.description }}</dd>
         </dl>
+    {% if is_granted('ROLE_ADMIN') %}
         <p>
             <a href="{{ url('wallpaper_edit',{'id': wallpaper.id|default('')}) }}" title="{{ 'action_edit'|trans }}" class="btn btn-primary">
                 {{ 'action_edit'|trans }}
@@ -32,6 +33,7 @@
                 {{ 'action_delete'|trans }}
             </a>
         </p>
+    {% endif %}
         <p>
             <a href="{{ url('wallpaper_index') }}" title="{{ 'action_back_to_list_wallpaper'|trans }}" class="btn btn-secondary">
                 {{ 'action_back_to_list_wallpaper'|trans }}
@@ -40,6 +42,9 @@
                 {{ 'action_back_to_gallery'|trans }}
             </a>
         </p>
+        <hr>
+        <hr>
+        <hr>
 
     {% else %}
         <p>

@@ -15,18 +15,23 @@
             <dt>{{ 'label_updated_at'|trans }}</dt>
             <dd>{{ category.updatedAt|date('d.m.Y') }}</dd>
             <dt>{{ 'label_title'|trans }}</dt>
-            <dd>{{  category.title }}</dd>
+            <dd>{{ category.title }}</dd>
         </dl>
+        {% if is_granted('ROLE_ADMIN') %}
+            <p>
+                <a href="{{ url('category_edit',{'id': category.id|default('')}) }}" title="{{ 'action_edit'|trans }}"
+                   class="btn btn-primary">
+                    {{ 'action_edit'|trans }}
+                </a>
+                <a href="{{ url('category_delete',{'id': category.id|default('')}) }}"
+                   title="{{ 'action_delete'|trans }}" class="btn btn-danger">
+                    {{ 'action_delete'|trans }}
+                </a>
+            </p>
+        {% endif %}
         <p>
-            <a href="{{ url('category_edit',{'id': category.id|default('')}) }}" title="{{ 'action_edit'|trans }}" class="btn btn-primary">
-                {{ 'action_edit'|trans }}
-            </a>
-            <a href="{{ url('category_delete',{'id': category.id|default('')}) }}" title="{{ 'action_delete'|trans }}" class="btn btn-danger">
-                {{ 'action_delete'|trans }}
-            </a>
-        </p>
-        <p>
-            <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list_category'|trans }}" class="btn btn-secondary">
+            <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list_category'|trans }}"
+               class="btn btn-secondary">
                 {{ 'action_back_to_list_category'|trans }}
             </a>
         </p>
@@ -37,21 +42,21 @@
     {% endif %}
 
     {# wyświetlanie zdjęć jako galerii #}
-    <h3>{{ 'title_category_gallery'|trans }}</h3>
+    <h2>{{ 'title_category_gallery'|trans }}</h2>
     <div class="row">
-    {% if wallpaper is defined and wallpaper|length %}
-        {% for wallpaper in wallpaper %}
-            <div class="col-sm-6 col-md-4">
-                <a href="{{ url('wallpaper_show', {id: wallpaper.id}) }}" class="thumbnail">
-                    <img src="{{ asset('images/') ~ wallpaper.filename }}" alt="..." class="img-thumbnail">
-                </a>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>
-            {{ 'message_item_not_found'|trans }}
-        </p>
-    {% endif %}
+        {% if wallpaper is defined and wallpaper|length %}
+            {% for wallpaper in wallpaper %}
+                <div class="col-sm-6 col-md-4">
+                    <a href="{{ url('wallpaper_show', {id: wallpaper.id}) }}" class="thumbnail">
+                        <img src="{{ asset('images/') ~ wallpaper.filename }}" alt="..." class="img-thumbnail">
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>
+                {{ 'message_item_not_found'|trans }}
+            </p>
+        {% endif %}
     </div>
 
 {% endblock %}

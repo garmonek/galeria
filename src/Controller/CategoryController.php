@@ -6,9 +6,9 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\User;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
-use Doctrine\ORM\Mapping\Id;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -110,6 +110,8 @@ class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
+        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $category->setCreatedAt(new \DateTime());
             $category->setUpdatedAt(new \DateTime());
@@ -149,6 +151,8 @@ class CategoryController extends AbstractController
     {
         $form = $this->createForm(CategoryType::class, $category, ['method' => 'PUT']);
         $form->handleRequest($request);
+
+        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $category->setUpdatedAt(new \DateTime());
@@ -191,6 +195,8 @@ class CategoryController extends AbstractController
     {
         $form = $this->createForm(FormType::class, $category, ['method' => 'DELETE']);
         $form->handleRequest($request);
+
+        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
             $form->submit($request->request->get($form->getName()));

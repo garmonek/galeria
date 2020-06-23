@@ -6,9 +6,11 @@
 
 {% block body %}
     <h1 class="float-sm-left">{{ 'title_wallpaper_list'|trans }}</h1>
+    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ url('wallpaper_create') }}" title="{{ 'upload_new_wallpaper'|trans }}" class="btn btn-primary float-sm-right">
         {{ 'upload_new_wallpaper'|trans }}
     </a>
+    {% endif %}
     {% if pagination is defined and pagination.items|length %}
 
     {# <div class="navigation text-center">

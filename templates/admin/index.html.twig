@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{"Admin_settings"|trans}}{% endblock %}
+
+{% block body %}
+
+    {{ include('admin/_form.html.twig', {'button_label': 'Update'}) }}
+
+{% endblock %}

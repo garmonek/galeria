@@ -5,6 +5,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Wallpaper;
 use App\Form\WallpaperType;
 use App\Repository\WallpaperRepository;
@@ -130,6 +131,8 @@ class WallpaperController extends AbstractController
         $form = $this->createForm(WallpaperType::class, $wallpaper);
         $form->handleRequest($request);
 
+        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $wallpaperFilename = $this->fileUploader->upload(
                 $form->get('file')->getData()
@@ -177,6 +180,8 @@ class WallpaperController extends AbstractController
         $form = $this->createForm(WallpaperType::class, $wallpaper, ['method' => 'PUT']);
         $form->handleRequest($request);
 
+        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $wallpaper->setUpdatedAt(new \DateTime());
             $wallpaperRepository->save($wallpaper);
@@ -218,6 +223,8 @@ class WallpaperController extends AbstractController
     {
         $form = $this->createForm(FormType::class, $wallpaper, ['method' => 'DELETE']);
         $form->handleRequest($request);
+
+        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
             $form->submit($request->request->get($form->getName()));

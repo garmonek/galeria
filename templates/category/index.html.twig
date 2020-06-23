@@ -6,9 +6,11 @@
 
 {% block body %}
     <h1 class="float-sm-left">{{ 'title_category_list'|trans }}</h1>
+    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ url('category_create') }}" title="{{ 'action_create_category'|trans }}" class="btn btn-primary float-sm-right">
         {{ 'action_create_category'|trans }}
     </a>
+    {% endif %}
 
     {% if pagination is defined and pagination.items|length %}
 
