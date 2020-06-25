@@ -2,6 +2,7 @@
 /**
  * Admin controller.
  */
+
 namespace App\Controller;
 
 use App\Entity\User;
@@ -21,42 +22,70 @@ use Symfony\Component\Security\Core\Security;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin", name="admin")
+     * Edit action.
      *
-     * @param Request                      $request
-     * @param Security                     $security
+     * @param Request $request HTTP request
+     * @param Security $security Security
+     * @param User $user User entity
+     * @param UserRepository $userRepository User repository
      * @param UserPasswordEncoderInterface $encoder
-     * @param UserRepository               $userRepository
      *
-     * @return Response
+     * @return Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route(
+     *     "/admin/edit/{id}",
+     *     methods={"GET", "PUT"},
+     *     name="admin_edit",
+     * )
      */
-    public function index(Request $request, Security $security, UserPasswordEncoderInterface $encoder, UserRepository $userRepository): Response
+    public function edit(Request $request, Security $security, User $user, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
-        $user = new User();
-        $form = $this->createForm(AdminType::class, $user);
+
+        $form = $this->createForm(AdminType::class, $user, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $loggedUser = $security->getUser();
-            if ($encoder->isPasswordValid($loggedUser, $user->getConfirm())) {
-                $dbUser = $userRepository->findAll()[0];
-                $dbUser->setPassword($encoder->encodePassword($dbUser, $user->getPassword()));
-                $dbUser->setEmail($user->getEmail());
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($dbUser);
-                $entityManager->flush();
+            $user->getPassword();
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
 
-                $this->addFlash('success', 'updated_successfully');
+            $userRepository->save($user);
+
+            $this->addFlash('success', 'message_updated_successfully');
+
+            return $this->redirectToRoute('wallpaper_index');
+        }
+
+
+        /*
+        if ($form->isSubmitted() && $form->isValid()) {
+            $loggedUser = $security->getUser();
+            if ($encoder->isPasswordValid($loggedUser, $user->getPassword())) {
+                $user = $userRepository->findAll()[0];
+                $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+                $user->setEmail($user->getEmail());
+                $this->getDoctrine()->getManager()->persist($form->getData());
+                $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash('success', 'message_updated_successfully');
 
                 return $this->redirectToRoute('wallpaper_index');
             }
-
-            $this->addFlash('danger', 'invalid_confirm_password');
         }
-
-        return $this->render('admin/index.html.twig', [
-            'form' => $form->createView(),
-        ]);
+    */
+        return $this->render(
+            'admin/index.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+            ]
+        );
     }
 }

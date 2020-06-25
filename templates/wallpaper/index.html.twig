@@ -51,8 +51,8 @@
         </div>
 
     {% else %}
-        <p>
+        <div class="alert alert-primary" role="alert" id="empty_message">
             {{ 'message_empty_list'|trans }}
-        </p>
+        </div>
     {% endif %}
 {% endblock %}

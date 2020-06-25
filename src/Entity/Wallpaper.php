@@ -94,6 +94,9 @@ class Wallpaper
      */
     private $comments;
 
+    /**
+     * Wallpaper constructor.
+     */
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -242,6 +245,8 @@ class Wallpaper
     }
 
     /**
+     * Getter for Comments.
+     *
      * @return Collection|Comment[]
      */
     public function getComments(): Collection
@@ -249,6 +254,12 @@ class Wallpaper
         return $this->comments;
     }
 
+    /**
+     * Adder for Comment.
+     *
+     * @param Comment $comment
+     * @return $this
+     */
     public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
@@ -259,6 +270,12 @@ class Wallpaper
         return $this;
     }
 
+    /**
+     * Remover for Comment.
+     *
+     * @param Comment $comment
+     * @return $this
+     */
     public function removeComment(Comment $comment): self
     {
         if ($this->comments->contains($comment)) {

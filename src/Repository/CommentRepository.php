@@ -14,14 +14,17 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CommentRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Comment::class);
     }
 
     // /**
-    //  * @return Comment[] Returns an array of Comment objects
-    //  */
+    // * @return Comment[] Returns an array of Comment objects
+    // */
     /*
     public function findByExampleField($value)
     {
@@ -37,6 +40,12 @@ class CommentRepository extends ServiceEntityRepository
     */
 
     /*
+    /**
+     * @param $value
+     * @return Comment|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    /*
     public function findOneBySomeField($value): ?Comment
     {
         return $this->createQueryBuilder('c')
@@ -47,4 +56,33 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * Save comment.
+     *
+     * @param \App\Entity\Comment $comment Comment entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Comment $comment): void
+    {
+        $this->_em->persist($comment);
+        $this->_em->flush($comment);
+    }
+
+    /**
+     * Delete comment.
+     *
+     * @param \App\Entity\Comment $comment Comment entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function delete(Comment $comment): void
+    {
+        $this->_em->remove($comment);
+        $this->_em->flush($comment);
+    }
+
 }

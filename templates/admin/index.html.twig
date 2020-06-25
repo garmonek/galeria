@@ -4,6 +4,9 @@
 
 {% block body %}
 
-    {{ include('admin/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn-lg btn-success">{{ 'Save'|trans }}</button>
+    {{ form_end(form) }}
 
 {% endblock %}

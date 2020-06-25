@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'comment_delete'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'Comment delete'|trans }}</h1>
+    <h3>{{ 'caution_comment_delete'|trans }}</h3>
+    {{ form_start(form, { method: 'DELETE', action: url('wallpaper_comment_delete', {id: comment.id}) }) }}
+    {{ form_widget(form) }}
+    <div class="form-group row float-sm-right">
+        <input type="submit" value="{{ 'action_delete'|trans }}" class="btn btn-danger" />
+    </div>
+    <div class="form-group float-sm-left">
+        <a href="{{ url('wallpaper_show',{'id': comment.wallpaper.id|default('')}) }}" class="btn btn-secondary">
+            {{ 'action_back_to_show'|trans }}
+        </a>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

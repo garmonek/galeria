@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
     <title>{% block title %}Welcome!{% endblock %}</title>
 
@@ -38,12 +39,14 @@
             </div>
         </div>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <div>{{ app.user.email }}</div>
-            <div>
+            <p class="btn btn-sm btn-outline-primary" type="button">
+                <a href="{{ url('admin_edit', {id: app.user.id}) }}">{{ app.user.email }}</a
+            </p>
+            <p class="btn btn-sm btn-outline-primary" type="button">
                 <a href="{{ url('app_logout') }}">{{ 'action_logout'|trans }}</a>
-            </div>
+            </p>
         {% else %}
-            <div>
+            <div class="btn btn-sm btn-outline-primary" type="button">
                 <a href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>
             </div>
         {% endif %}

@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class CategoryType.
+ * @package App\Form
  */
 class CategoryType extends AbstractType
 {

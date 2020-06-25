@@ -5,11 +5,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\User;
 use App\Entity\Wallpaper;
+use App\Form\CommentType;
 use App\Form\WallpaperType;
+use App\Repository\CommentRepository;
 use App\Repository\WallpaperRepository;
 use App\Service\FileUploader;
+use DateTime;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
@@ -28,30 +34,37 @@ class WallpaperController extends AbstractController
     /**
      * Wallpaper repository.
      *
-     * @var \App\Repository\WallpaperRepository
+     * @var WallpaperRepository
      */
     private $wallpaperRepository;
 
     /**
      * File uploader.
      *
-     * @var \App\Service\FileUploader
+     * @var FileUploader
      */
     private $fileUploader;
 
     /**
      * Filesystem component.
      *
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var Filesystem
      */
     private $filesystem;
 
     /**
+     * Comment repository.
+     *
+     * @var CommentRepository
+     */
+    private $commentRepository;
+
+    /**
      * Index action.
      *
-     * @param \App\Repository\WallpaperRepository $wallpaperRepository Wallpaper repository
+     * @param WallpaperRepository $wallpaperRepository Wallpaper repository
      *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     * @return Response HTTP response
      *
      * @Route(
      *     "/",
@@ -76,10 +89,10 @@ class WallpaperController extends AbstractController
     /**
      * Show action.
      *
-     * @param \App\Entity\Wallpaper $wallpaper Wallpaper entity
+     * @param Wallpaper $wallpaper Wallpaper entity
+     * @param CommentRepository $commentRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
-     *
+     * @return Response HTTP response
      * @Route(
      *     "/{id}",
      *     methods={"GET"},
@@ -87,20 +100,23 @@ class WallpaperController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      * )
      */
-    public function show(Wallpaper $wallpaper): Response
+    public function show(Wallpaper $wallpaper, CommentRepository $commentRepository): Response
     {
         return $this->render(
             'wallpaper/show.html.twig',
-            ['wallpaper' => $wallpaper]
+            [
+                'wallpaper' => $wallpaper,
+                'comments' => $commentRepository->findBy(['id' => $wallpaper->getId()])
+            ]
         );
     }
 
     /**
      * WallpaperController constructor.
      *
-     * @param \App\Repository\WallpaperRepository $wallpaperRepository Wallpaper repository
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem Filesystem component
-     * @param \App\Service\FileUploader $fileUploader File uploader
+     * @param WallpaperRepository $wallpaperRepository Wallpaper repository
+     * @param Filesystem $filesystem Filesystem component
+     * @param FileUploader $fileUploader File uploader
      */
     public function __construct(WallpaperRepository $wallpaperRepository, Filesystem $filesystem, FileUploader $fileUploader)
     {
@@ -112,12 +128,12 @@ class WallpaperController extends AbstractController
     /**
      * Create action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param Request $request HTTP request
      *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     * @return Response HTTP response
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      *
      * @Route(
      *     "/create",
@@ -138,8 +154,8 @@ class WallpaperController extends AbstractController
                 $form->get('file')->getData()
             );
             $wallpaper->setFilename($wallpaperFilename);
-            $wallpaper->setCreatedAt(new \DateTime());
-            $wallpaper->setUpdatedAt(new \DateTime());
+            $wallpaper->setCreatedAt(new DateTime());
+            $wallpaper->setUpdatedAt(new DateTime());
             $this->wallpaperRepository->save($wallpaper);
             $this->getDoctrine()->getManager()->persist($form->getData());
             $this->getDoctrine()->getManager()->flush();
@@ -152,21 +168,20 @@ class WallpaperController extends AbstractController
         return $this->render(
             'wallpaper/create.html.twig',
             ['form' => $form->createView()]
-
         );
     }
 
     /**
      * Edit action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request  $request            HTTP request
-     * @param \App\Entity\Wallpaper                      $wallpaper           Wallpaper entity
-     * @param \App\Repository\WallpaperRepository        $wallpaperRepository Wallpaper repository
+     * @param Request             $request             HTTP request
+     * @param Wallpaper           $wallpaper           Wallpaper entity
+     * @param WallpaperRepository $wallpaperRepository Wallpaper repository
      *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     * @return Response HTTP response
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      *
      * @Route(
      *     "/{id}/edit",
@@ -177,13 +192,13 @@ class WallpaperController extends AbstractController
      */
     public function edit(Request $request, Wallpaper $wallpaper, WallpaperRepository $wallpaperRepository): Response
     {
+        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
+
         $form = $this->createForm(WallpaperType::class, $wallpaper, ['method' => 'PUT']);
         $form->handleRequest($request);
 
-        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $wallpaper->setUpdatedAt(new \DateTime());
+            $wallpaper->setUpdatedAt(new DateTime());
             $wallpaperRepository->save($wallpaper);
 
             $this->addFlash('success', 'message_updated_successfully');
@@ -203,14 +218,14 @@ class WallpaperController extends AbstractController
     /**
      * Delete action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
-     * @param \App\Entity\Wallpaper                      $wallpaper           Wallpaper entity
-     * @param \App\Repository\WallpaperRepository        $wallpaperRepository Wallpaper repository
+     * @param Request             $request             HTTP request
+     * @param Wallpaper           $wallpaper           Wallpaper entity
+     * @param WallpaperRepository $wallpaperRepository Wallpaper repository
      *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     * @return Response HTTP response
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      *
      * @Route(
      *     "/{id}/delete",
@@ -244,5 +259,94 @@ class WallpaperController extends AbstractController
                 'wallpaper' => $wallpaper,
             ]
         );
+    }
+
+    /**
+     * Comment action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @param CommentRepository $commentRepository
+     * @param $wallpaper
+     * @return Response HTTP response
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @Route(
+     *     "/{id}/comment",
+     *     name="wallpaper_comment",
+     *     methods={"GET", "POST"}
+     * )
+     */
+    public function comment(Request $request, Wallpaper $wallpaper): Response
+    {
+        $comment = new Comment();
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setCreatedAt(new DateTime());
+            $comment->setWallpaper($wallpaper);
+            $this->getDoctrine()->getManager()->persist($comment);
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'message_created_successfully');
+
+            return $this->redirectToRoute('wallpaper_show', ['id' => $wallpaper->getId()]);
+        }
+
+        return $this->render(
+            'wallpaper/comment.html.twig',
+            [
+                'form' => $form->createView(),
+                'comment' => $comment,
+                'wallpaper' => $wallpaper,
+            ]
+        );
+    }
+
+    /**
+     * Delete comment action.
+     *
+     * @param Request $request HTTP request
+     * @param Comment $comment Comment entity
+     * @param CommentRepository $commentRepository Comment repository
+     *
+     * @return Response HTTP response
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     *
+     * @Route(
+     *     "/{id}/comment/delete",
+     *     methods={"DELETE","GET"},
+     *     requirements={"id": "[1-9]\d*"},
+     *     name="wallpaper_comment_delete",
+     * )
+     */
+    public function comment_delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
+    {
+        $form = $this->createForm(FormType::class, $comment, ['method' => 'DELETE']);
+        $form->handleRequest($request);
+
+        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commentRepository->delete($comment);
+
+            $this->addFlash('success', 'deleted_successfully');
+
+            return $this->redirectToRoute('wallpaper_show', ['id' => $comment->getWallpaperId()]);
+        }
+
+        return $this->render('wallpaper/comment_delete.html.twig', [
+            'comment' => $comment,
+            'form' => $form->createView(),
+        ]);
     }
 }
