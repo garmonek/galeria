@@ -1,0 +1,14 @@
+{#
+    Single flash message template.
+
+    parameters:
+        - type: Message type according to Bootstrap alert types,
+        - message: Message content,
+#}
+{# Bootstrap alert, see http://getbootstrap.com/components/#alerts #}
+<div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message|trans }}
+</div>

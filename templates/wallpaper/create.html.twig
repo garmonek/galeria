@@ -1,18 +1,10 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}
-    {{ 'upload_new_wallpaper'|trans }}
-{% endblock %}
-
-{% block body %}
-
-    <h1>{{ 'upload_new_wallpaper'|trans }}</h1>
-
-    {{ form_start(form, { method: 'POST', action: url('wallpaper_create') }) }}
-    {{ form_widget(form) }}
-    <button type="submit" class="btn btn-primary float-right">{{ 'send'|trans }}</button>
-    {{ form_end(form) }}
-
-    <a href="{{ path('wallpaper_index') }}" class="btn btn-secondary">{{ 'back_to_gallery'|trans }}</a>
-
-{% endblock %}
+{% include 'default/_form.html.twig' with {
+    page_title: 'title_wallpaper_create',
+    attr: {
+        method: 'POST',
+        action: url('wallpaper_create')
+    },
+    form: form,
+    submit_label: 'action_create'|trans,
+    back_to_list_path: 'category_index',
+} %}

@@ -36,33 +36,28 @@ class WallpaperController extends AbstractController
      *
      * @var WallpaperRepository
      */
-    private $wallpaperRepository;
+    private WallpaperRepository $wallpaperRepository;
 
     /**
      * File uploader.
      *
      * @var FileUploader
      */
-    private $fileUploader;
+    private FileUploader $fileUploader;
 
     /**
      * Filesystem component.
      *
      * @var Filesystem
      */
-    private $filesystem;
-
-    /**
-     * Comment repository.
-     *
-     * @var CommentRepository
-     */
-    private $commentRepository;
+    private Filesystem $filesystem;
 
     /**
      * Index action.
      *
-     * @param WallpaperRepository $wallpaperRepository Wallpaper repository
+     * @param Request               $request                HTTP Request
+     * @param WallpaperRepository   $wallpaperRepository    Wallpaper repository
+     * @param PaginatorInterface    $paginator              Paginator
      *
      * @return Response HTTP response
      *
@@ -89,10 +84,11 @@ class WallpaperController extends AbstractController
     /**
      * Show action.
      *
-     * @param Wallpaper $wallpaper Wallpaper entity
-     * @param CommentRepository $commentRepository
+     * @param Wallpaper             $wallpaper              Wallpaper entity
+     * @param CommentRepository     $commentRepository      Comment Repository
      *
      * @return Response HTTP response
+     *
      * @Route(
      *     "/{id}",
      *     methods={"GET"},
@@ -114,9 +110,9 @@ class WallpaperController extends AbstractController
     /**
      * WallpaperController constructor.
      *
-     * @param WallpaperRepository $wallpaperRepository Wallpaper repository
-     * @param Filesystem $filesystem Filesystem component
-     * @param FileUploader $fileUploader File uploader
+     * @param WallpaperRepository       $wallpaperRepository    Wallpaper repository
+     * @param Filesystem                $filesystem             Filesystem component
+     * @param FileUploader              $fileUploader           File uploader
      */
     public function __construct(WallpaperRepository $wallpaperRepository, Filesystem $filesystem, FileUploader $fileUploader)
     {
@@ -128,7 +124,7 @@ class WallpaperController extends AbstractController
     /**
      * Create action.
      *
-     * @param Request $request HTTP request
+     * @param Request   $request    HTTP request
      *
      * @return Response HTTP response
      *
@@ -174,9 +170,9 @@ class WallpaperController extends AbstractController
     /**
      * Edit action.
      *
-     * @param Request             $request             HTTP request
-     * @param Wallpaper           $wallpaper           Wallpaper entity
-     * @param WallpaperRepository $wallpaperRepository Wallpaper repository
+     * @param Request               $request                HTTP request
+     * @param Wallpaper             $wallpaper              Wallpaper entity
+     * @param WallpaperRepository   $wallpaperRepository    Wallpaper repository
      *
      * @return Response HTTP response
      *
@@ -218,9 +214,9 @@ class WallpaperController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request             $request             HTTP request
-     * @param Wallpaper           $wallpaper           Wallpaper entity
-     * @param WallpaperRepository $wallpaperRepository Wallpaper repository
+     * @param Request               $request                HTTP request
+     * @param Wallpaper             $wallpaper              Wallpaper entity
+     * @param WallpaperRepository   $wallpaperRepository    Wallpaper repository
      *
      * @return Response HTTP response
      *
@@ -264,14 +260,11 @@ class WallpaperController extends AbstractController
     /**
      * Comment action.
      *
-     * @param Request $request HTTP request
+     * @param Request       $request        HTTP request
+     * @param Wallpaper     $wallpaper      Wallpaper Entity
      *
-     * @param CommentRepository $commentRepository
-     * @param $wallpaper
      * @return Response HTTP response
      *
-     * @throws ORMException
-     * @throws OptimisticLockException
      * @Route(
      *     "/{id}/comment",
      *     name="wallpaper_comment",
@@ -327,10 +320,10 @@ class WallpaperController extends AbstractController
      */
     public function comment_delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
+        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
+
         $form = $this->createForm(FormType::class, $comment, ['method' => 'DELETE']);
         $form->handleRequest($request);
-
-        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
             $form->submit($request->request->get($form->getName()));

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 
     <title>{% block title %}Welcome!{% endblock %}</title>
 
@@ -17,56 +17,21 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
     {% block stylesheets %}{% endblock %}
-
 </head>
 
 <body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <div class="container">
+{{ include('header.html.twig') }}
 
-            <a class="navbar-brand" href="{{ path('home') }}">{{ 'home'|trans }}</a>
-
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('wallpaper_index') }}">{{ 'title_wallpaper_list'|trans }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('category_index') }}">{{ 'title_category_list'|trans }}</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <p class="btn btn-sm btn-outline-primary" type="button">
-                <a href="{{ url('admin_edit', {id: app.user.id}) }}">{{ app.user.email }}</a
-            </p>
-            <p class="btn btn-sm btn-outline-primary" type="button">
-                <a href="{{ url('app_logout') }}">{{ 'action_logout'|trans }}</a>
-            </p>
-        {% else %}
-            <div class="btn btn-sm btn-outline-primary" type="button">
-                <a href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>
-            </div>
-        {% endif %}
-
-
-    </nav>
-</header>
-
-<main role="main" class="container main">
-
-    {% include 'flash_messages.html.twig' %}
-
+<main role="main" class="jumbotron">
+    {% include 'default/_flash_messages.html.twig' %}
     {% block body %}{% endblock %}
-
 </main>
 
 <footer class="py-2 bg-dark">
     <div class="container" id="footer">
         <p class="m-0 text-center text-white">Copyright &copy; Projekt z Systemu Interakcyjnego 2020. Zdjęcia:
-            <a href="https://unsplash.com/">Unsplash</a>.<br/>JMJ ✠ Pracę dedykuję Maryi Niepokalanej z
+            <a href="https://unsplash.com/">Unsplash</a>, kod:
+            <a href="https://github.com/garmonek/galeria">Github</a>.<br/>JMJ ✠ Pracę dedykuję Maryi Niepokalanej z
             synowskim hołdem</p>
 
     </div>

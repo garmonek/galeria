@@ -59,7 +59,7 @@ class UserFixtures extends AbstractBaseFixtures
             $user->setPassword(
                 $this->passwordEncoder->encodePassword(
                     $user,
-                    'admin1234'
+                    'admin'
                 )
             );
 

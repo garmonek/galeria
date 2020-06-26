@@ -199,6 +199,71 @@
                 <source>caution_wallpaper_delete</source>
                 <target>Caution! Are you sure you want to delete this wallpaper?</target>
             </trans-unit>
+            <trans-unit id="Admin_settings">
+                <source>Admin_settings</source>
+                <target>Admin settings</target>
+            </trans-unit>
+            <trans-unit id="Comment delete">
+                <source>Comment delete</source>
+                <target>Delete comment</target>
+            </trans-unit>
+            <trans-unit id="Save">
+                <source>Save</source>
+                <target>Save</target>
+            </trans-unit>
+            <trans-unit id="action_back_to_list">
+                <source>action_back_to_list</source>
+                <target>Back to the list</target>
+            </trans-unit>
+            <trans-unit id="action_create">
+                <source>action_create</source>
+                <target>Create</target>
+            </trans-unit>
+            <trans-unit id="action_delete_comment">
+                <source>action_delete_comment</source>
+                <target>Delete comment</target>
+            </trans-unit>
+            <trans-unit id="action_login">
+                <source>action_login</source>
+                <target>Login</target>
+            </trans-unit>
+            <trans-unit id="action_logout">
+                <source>action_logout</source>
+                <target>Logout</target>
+            </trans-unit>
+            <trans-unit id="add_comment">
+                <source>add_comment</source>
+                <target>Add comment</target>
+            </trans-unit>
+            <trans-unit id="caution_comment_delete">
+                <source>caution_comment_delete</source>
+                <target>Are you sure you want to delete comment?</target>
+            </trans-unit>
+            <trans-unit id="comment">
+                <source>comment</source>
+                <target>Comment</target>
+            </trans-unit>
+            <trans-unit id="comment_delete">
+                <source>comment_delete</source>
+                <target>Comment delete</target>
+            </trans-unit>
+            <trans-unit id="comments">
+                <source>comments</source>
+                <target>Comments</target>
+            </trans-unit>
+
+            <trans-unit id="label_content">
+                <source>label_content</source>
+                <target>Content</target>
+            </trans-unit>
+            <trans-unit id="label_email">
+                <source>label_email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="label_nick">
+                <source>label_nick</source>
+                <target>Nick</target>
+            </trans-unit>
 
         </body>
     </file>

@@ -27,48 +27,22 @@ class AdminType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'label_change_email',
+                'label' => 'label_email',
                 'required' => false,
+                'attr' => [
+                    'max_length' => 128,
+                    ]
             ])
+            ->add('confirm', PasswordType::class)
             ->add('plainPassword', RepeatedType::class, array(
                 'type'              => PasswordType::class,
                 'mapped'            => false,
-                'required'          => false,
+                'required'          => true,
                 'first_options'     => array('label' => 'New password'),
                 'second_options'    => array('label' => 'Confirm new password'),
                 'invalid_message'   => 'The password fields must match.',
             ))
         ;
-
-
-        /*
-
-            ->add('password', PasswordType::class, [
-                'label' => 'label_change_password',
-                'required' => false,
-            ])
-
-            ->add('newPassword', RepeatedType::class, array(
-                'type' => 'password',
-                'invalid_message' => 'The password fields must match.',
-                'required' => true,
-                'first_options'  => array('label' => 'New Password'),
-                'second_options' => array('label' => 'Repeat Password'),
-            ));
-
-
-            ->add('newPassword', PasswordType::class, array(
-                'mapped' => false
-            ))
-            ->add('plainPassword', RepeatedType::class, array(
-            'type' => PasswordType::class,
-            'invalid_message' => 'Incorrect password',
-            'options' => array(
-                'attr' => array(
-                    'class' => 'password-field'
-                )
-            )));
-        */
     }
 
     /**

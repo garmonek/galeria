@@ -1,0 +1,33 @@
+<header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container">
+
+            <a class="navbar-brand" href="{{ path('home') }}">{{ 'home'|trans }}</a>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('wallpaper_index') }}">{{ 'title_wallpaper_list'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('category_index') }}">{{ 'title_category_list'|trans }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <p class="btn btn-sm btn-outline-secondary mr-2" type="button">
+                <a href="{{ url('admin_edit', {id: app.user.id}) }}" id="login">{{ app.user.email }}</a
+            </p>
+            <p class="btn btn-sm btn-outline-secondary" type="button">
+                <a href="{{ url('app_logout') }}" id="login">{{ 'action_logout'|trans }}</a>
+            </p>
+        {% else %}
+            <div class="btn btn-sm btn-outline-secondary" type="button">
+                <a href="{{ url('app_login') }}" id="login">{{ 'action_login'|trans }}</a>
+            </div>
+        {% endif %}
+
+
+    </nav>
+</header>

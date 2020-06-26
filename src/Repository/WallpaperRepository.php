@@ -62,36 +62,6 @@ class WallpaperRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return Wallpaper[] Returns an array of Wallpaper objects
-    */
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    /**
-     * @param $value
-     * @return Wallpaper|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findOneBySomeField($value): ?Wallpaper
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-
-    /**
      * Save record.
      *
      * @param \App\Entity\Wallpaper $wallpaper Wallpaper entity

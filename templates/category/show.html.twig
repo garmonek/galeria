@@ -28,6 +28,11 @@
                     {{ 'action_delete'|trans }}
                 </a>
             </p>
+            <p>
+                <a href="{{ url('wallpaper_create') }}" title="{{ 'upload_new_wallpaper'|trans }}" class="btn btn-primary">
+                    {{ 'upload_new_wallpaper'|trans }}
+                </a>
+            </p>
         {% endif %}
         <p>
             <a href="{{ url('category_index') }}" title="{{ 'action_back_to_list_category'|trans }}"

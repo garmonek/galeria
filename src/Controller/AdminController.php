@@ -24,11 +24,11 @@ class AdminController extends AbstractController
     /**
      * Edit action.
      *
-     * @param Request $request HTTP request
-     * @param Security $security Security
-     * @param User $user User entity
-     * @param UserRepository $userRepository User repository
-     * @param UserPasswordEncoderInterface $encoder
+     * @param Request                           $request            HTTP request
+     * @param Security                          $security           Security
+     * @param User                              $user               User entity
+     * @param UserRepository                    $userRepository     User repository
+     * @param UserPasswordEncoderInterface      $passwordEncoder    Password encoder
      *
      * @return Response HTTP response
      *
@@ -48,7 +48,6 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->getPassword();
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -63,23 +62,6 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('wallpaper_index');
         }
 
-
-        /*
-        if ($form->isSubmitted() && $form->isValid()) {
-            $loggedUser = $security->getUser();
-            if ($encoder->isPasswordValid($loggedUser, $user->getPassword())) {
-                $user = $userRepository->findAll()[0];
-                $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-                $user->setEmail($user->getEmail());
-                $this->getDoctrine()->getManager()->persist($form->getData());
-                $this->getDoctrine()->getManager()->flush();
-
-                $this->addFlash('success', 'message_updated_successfully');
-
-                return $this->redirectToRoute('wallpaper_index');
-            }
-        }
-    */
         return $this->render(
             'admin/index.html.twig',
             [

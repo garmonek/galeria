@@ -18,7 +18,7 @@ class FileUploader
      *
      * @var string
      */
-    private $targetDirectory;
+    private string $targetDirectory;
 
     /**
      * FileUploader constructor.
@@ -67,7 +67,7 @@ class FileUploader
      * Generates new filename.
      *
      * @param string $originalFilename Original filename
-     * @param string $extension        File extension
+     * @param string $extension File extension
      *
      * @return string New filename
      */
@@ -78,6 +78,6 @@ class FileUploader
             $originalFilename
         );
 
-        return $safeFilename.'-'.uniqid().'.'.$extension;
+        return $safeFilename . '-' . uniqid() . '.' . $extension;
     }
 }

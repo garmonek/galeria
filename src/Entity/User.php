@@ -8,6 +8,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -83,6 +84,17 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * Confirm password.
+     *
+     * @var string
+     *
+     * @SecurityAssert\UserPassword(
+     *  message = "Wrong value for your current password"
+     * )
+     */
+    private $confirm;
 
     /**
      * Getter for the Id.
@@ -189,5 +201,25 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * Getter for Confirm.
+     *
+     * @return string
+     */
+    public function getConfirm(): string
+    {
+        return $this->confirm ?? '';
+    }
+
+    /**
+     * Setter for Confirm.
+     *
+     * @param string $confirm
+     */
+    public function setConfirm(string $confirm): void
+    {
+        $this->confirm = $confirm;
     }
 }

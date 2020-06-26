@@ -7,7 +7,7 @@
 {% block body %}
     <h1>{{ 'title_wallpaper_details'|trans({'%id%': wallpaper.id|default('')}) }}</h1>
     {% if wallpaper is defined and wallpaper|length %}
-        <img src="{{ asset('images/') ~ wallpaper.filename }}" alt="..." class="img-thumbnail">
+        <img src="{{ asset('images/') ~ wallpaper.filename }}" alt="..." class="img-thumbnail col-sm-6">
         <dl class="dl-horizontal">
             <dt>{{ 'label_id'|trans }}</dt>
             <dd>{{ wallpaper.id }}</dd>
@@ -48,31 +48,7 @@
             </a>
         </p>
 
-        <h2><i class="pr-3 fa fa-comment"></i>{{ wallpaper.comments|length }} {{ 'comments'|trans }} </h2>
-        <a href="{{ url('wallpaper_comment', {id: wallpaper.id}) }}" title="{{ 'add_comment'|trans }}"
-           class="btn btn-info">
-            {{ 'add_comment'|trans }}
-        </a>
-        {% for comment in wallpaper.comments %}
-            <div class="row">
-                <div class="col-sm-12">
-                    <small><strong>{{ comment.nick }}</strong></small>
-                    <small>{{ comment.email }}</small>
-                    <small>{{ comment.createdAt|date('d.m.Y H:i') }}</small>
-                    <br>
-                    <span> {{ comment.content }}</span>
-                </div>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ url('wallpaper_comment_delete',{'id': comment.id|default('')}) }}"
-                       title="{{ 'action_delete_comment'|trans }}" class="btn-sm btn-danger">
-                        {{ 'action_delete_comment'|trans }}
-                    </a>
-                {% endif %}
-            </div>
-        {% endfor %}
-        <hr>
-        <hr>
-        <hr>
+        {{ include('wallpaper/comment_show.html.twig') }}
     {% else %}
         <p>
             {{ 'message_item_not_found'|trans }}

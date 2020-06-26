@@ -29,9 +29,9 @@ class CategoryController extends AbstractController
     /**
      * Index action.
      *
-     * @param Request $request            HTTP request
-     * @param CategoryRepository $categoryRepository Category repository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator          Paginator
+     * @param Request                   $request                HTTP request
+     * @param CategoryRepository        $categoryRepository     Category repository
+     * @param PaginatorInterface        $paginator              Paginator
      *
      * @return Response HTTP response
      *
@@ -58,9 +58,9 @@ class CategoryController extends AbstractController
     /**
      * Show action.
      *
-     * @param Category $category Category entity
-     *
+     * @param Category   $category  Category entity
      * @param $id
+     *
      * @return Response HTTP response
      *
      * @ParamConverter("Id", options={"mapping": {"category_id" : "id"}})
@@ -92,8 +92,8 @@ class CategoryController extends AbstractController
     /**
      * Create action.
      *
-     * @param Request $request            HTTP request
-     * @param CategoryRepository $categoryRepository Category repository
+     * @param Request                   $request                    HTTP request
+     * @param CategoryRepository        $categoryRepository         Category repository
      *
      * @return Response HTTP response
      *
@@ -133,9 +133,9 @@ class CategoryController extends AbstractController
     /**
      * Edit action.
      *
-     * @param Request            $request            HTTP request
-     * @param Category           $category           Category entity
-     * @param CategoryRepository $categoryRepository Category repository
+     * @param Request                 $request                HTTP request
+     * @param Category                $category               Category entity
+     * @param CategoryRepository      $categoryRepository     Category repository
      *
      * @return Response HTTP response
      *
@@ -177,9 +177,9 @@ class CategoryController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request $request            HTTP request
-     * @param Category $category           Category entity
-     * @param CategoryRepository $categoryRepository Category repository
+     * @param Request               $request                HTTP request
+     * @param Category              $category               Category entity
+     * @param CategoryRepository    $categoryRepository     Category repository
      *
      * @return Response HTTP response
      *
@@ -195,10 +195,12 @@ class CategoryController extends AbstractController
      */
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
+        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
+
         $form = $this->createForm(FormType::class, $category, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
-        $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
+        $this->addFlash('danger', 'caution_category_delete');
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
             $form->submit($request->request->get($form->getName()));

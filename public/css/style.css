@@ -14,6 +14,10 @@ h3 {
     color: red;
 }
 
+#login {
+    color: white;
+}
+
 footer {
     position: fixed;
     left: 0;
@@ -26,4 +30,8 @@ footer {
 #empty_message {
     position: relative;
     top: 100px;
+}
+
+#comment {
+    border-bottom: 1px dotted #ccc;
 }

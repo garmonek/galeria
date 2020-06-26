@@ -10,12 +10,16 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Wallpaper.
  *
  * @ORM\Entity(repositoryClass=WallpaperRepository::class)
  * @ORM\Table(name="wallpapers")
+ *
+ * @UniqueEntity(fields={"title"})
  */
 class Wallpaper
 {
@@ -51,6 +55,13 @@ class Wallpaper
      *     type="string",
      *     length=64,
      * )
+     *
+     * @Assert\Type(type="string")
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min="3",
+     *     max="64",
+     * )
      */
     private $title;
 
@@ -60,6 +71,8 @@ class Wallpaper
      * @var DateTimeInterface
      *
      * @ORM\Column(type="datetime")
+     *
+     * @Assert\Type(type="\DateTimeInterface")
      */
     private $createdAt;
 
@@ -69,6 +82,8 @@ class Wallpaper
      * @var DateTimeInterface
      *
      * @ORM\Column(type="datetime")
+     *
+     * @Assert\Type(type="\DateTimeInterface")
      */
     private $updatedAt;
 
