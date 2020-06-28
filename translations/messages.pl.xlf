@@ -264,6 +264,34 @@
                 <source>label_nick</source>
                 <target>Nick</target>
             </trans-unit>
+            <trans-unit id="Email could not be found.">
+                <source>Email could not be found.</source>
+                <target>Nie ma takiego maila w bazie</target>
+            </trans-unit>
+            <trans-unit id="title_wallpaper_create">
+                <source>title_wallpaper_create</source>
+                <target>Dodaj tapetę</target>
+            </trans-unit>
+            <trans-unit id="deleted_successfully">
+                <source>deleted_successfully</source>
+                <target>Usunięto pomyślnie</target>
+            </trans-unit>
+            <trans-unit id="Unsupported Image File">
+                <source>Unsupported Image File</source>
+                <target>Nieobsługiwany typ pliku</target>
+            </trans-unit>
+            <trans-unit id="Confirm">
+                <source>Confirm</source>
+                <target>Stare hasło</target>
+            </trans-unit>
+            <trans-unit id="New password">
+                <source>New password</source>
+                <target>Nowe hasło</target>
+            </trans-unit>
+            <trans-unit id="Confirm new password">
+                <source>Confirm new password</source>
+                <target>Powtórz nowe hasło</target>
+            </trans-unit>
 
         </body>
     </file>

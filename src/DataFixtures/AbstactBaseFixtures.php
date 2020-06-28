@@ -8,6 +8,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Faker\Generator;
 use InvalidArgumentException;
 use LogicException;
 
@@ -19,7 +20,7 @@ abstract class AbstractBaseFixtures extends Fixture
     /**
      * Faker.
      *
-     * @var \Faker\Generator
+     * @var Generator
      */
     protected $faker;
 

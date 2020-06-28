@@ -8,6 +8,8 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class entity.
@@ -38,6 +40,8 @@ class Comment
      * @var DateTimeInterface
      *
      * @ORM\Column(type="datetime")
+     *
+     * @Gedmo\Timestampable(on="create")
      */
     private $createdAt;
 
@@ -54,6 +58,10 @@ class Comment
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
      */
     private $email;
 

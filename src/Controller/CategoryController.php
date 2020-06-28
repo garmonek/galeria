@@ -78,6 +78,7 @@ class CategoryController extends AbstractController
             ->getRepository(Category::class)
             ->find($id);
 
+
         $wallpaper = $category->getWallpapers();
 
         return $this->render(

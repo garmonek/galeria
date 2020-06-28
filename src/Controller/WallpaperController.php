@@ -13,7 +13,6 @@ use App\Form\WallpaperType;
 use App\Repository\CommentRepository;
 use App\Repository\WallpaperRepository;
 use App\Service\FileUploader;
-use DateTime;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\PaginatorInterface;
@@ -150,8 +149,6 @@ class WallpaperController extends AbstractController
                 $form->get('file')->getData()
             );
             $wallpaper->setFilename($wallpaperFilename);
-            $wallpaper->setCreatedAt(new DateTime());
-            $wallpaper->setUpdatedAt(new DateTime());
             $this->wallpaperRepository->save($wallpaper);
             $this->getDoctrine()->getManager()->persist($form->getData());
             $this->getDoctrine()->getManager()->flush();
@@ -194,7 +191,6 @@ class WallpaperController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $wallpaper->setUpdatedAt(new DateTime());
             $wallpaperRepository->save($wallpaper);
 
             $this->addFlash('success', 'message_updated_successfully');
@@ -243,6 +239,10 @@ class WallpaperController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $wallpaperRepository->delete($wallpaper);
+            $this->filesystem->remove(
+                $this->getParameter('wallpapers_directory').'/'.$wallpaper->getFilename()
+            );
+
             $this->addFlash('success', 'message.deleted_successfully');
 
             return $this->redirectToRoute('wallpaper_index');
@@ -279,7 +279,6 @@ class WallpaperController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setCreatedAt(new DateTime());
             $comment->setWallpaper($wallpaper);
             $this->getDoctrine()->getManager()->persist($comment);
             $this->getDoctrine()->getManager()->flush();
