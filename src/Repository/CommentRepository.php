@@ -1,4 +1,7 @@
 <?php
+/**
+ * Comment Repository
+ */
 
 namespace App\Repository;
 
@@ -15,7 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class CommentRepository extends ServiceEntityRepository
 {
     /**
-     * @param ManagerRegistry $registry
+     * @param ManagerRegistry $registry Manager Registry
      */
     public function __construct(ManagerRegistry $registry)
     {

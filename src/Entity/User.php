@@ -212,7 +212,7 @@ class User implements UserInterface
     /**
      * Getter for Confirm.
      *
-     * @return string
+     * @return string Confirm
      */
     public function getConfirm(): string
     {
@@ -222,7 +222,7 @@ class User implements UserInterface
     /**
      * Setter for Confirm.
      *
-     * @param string $confirm
+     * @param string $confirm Confirm
      */
     public function setConfirm(string $confirm): void
     {

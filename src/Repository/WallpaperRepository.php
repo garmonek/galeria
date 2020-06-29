@@ -7,8 +7,8 @@ namespace App\Repository;
 
 use App\Entity\Wallpaper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Wallpaper|null find($id, $lockMode = null, $lockVersion = null)
@@ -31,7 +31,8 @@ class WallpaperRepository extends ServiceEntityRepository
 
     /**
      * WallpaperRepository constructor.
-     * @param ManagerRegistry $registry
+     *
+     * @param ManagerRegistry $registry Manager Registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -50,18 +51,6 @@ class WallpaperRepository extends ServiceEntityRepository
     }
 
     /**
-     * Get or create new query builder.
-     *
-     * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder Query builder
-     *
-     * @return \Doctrine\ORM\QueryBuilder Query builder
-     */
-    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
-    {
-        return $queryBuilder ?? $this->createQueryBuilder('wallpaper');
-    }
-
-    /**
      * Save record.
      *
      * @param \App\Entity\Wallpaper $wallpaper Wallpaper entity
@@ -75,7 +64,6 @@ class WallpaperRepository extends ServiceEntityRepository
         $this->_em->flush($wallpaper);
     }
 
-
     /**
      * Delete record.
      *
@@ -88,5 +76,17 @@ class WallpaperRepository extends ServiceEntityRepository
     {
         $this->_em->remove($wallpaper);
         $this->_em->flush($wallpaper);
+    }
+
+    /**
+     * Get or create new query builder.
+     *
+     * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder Query builder
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+     */
+    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
+    {
+        return $queryBuilder ?? $this->createQueryBuilder('wallpaper');
     }
 }

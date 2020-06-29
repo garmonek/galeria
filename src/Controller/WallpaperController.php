@@ -13,9 +13,9 @@ use App\Form\WallpaperType;
 use App\Repository\CommentRepository;
 use App\Repository\WallpaperRepository;
 use App\Service\FileUploader;
+use App\Service\WallpaperService;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -31,32 +31,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class WallpaperController extends AbstractController
 {
     /**
-     * Wallpaper repository.
+     * WallpaperController constructor.
      *
-     * @var WallpaperRepository
+     * @param \App\Service\WallpaperService $wallpaperService Wallpaper service
+     * @param Filesystem                    $filesystem       Filesystem
+     * @param FileUploader                  $fileUploader     File Uploader
      */
-    private WallpaperRepository $wallpaperRepository;
-
-    /**
-     * File uploader.
-     *
-     * @var FileUploader
-     */
-    private FileUploader $fileUploader;
-
-    /**
-     * Filesystem component.
-     *
-     * @var Filesystem
-     */
-    private Filesystem $filesystem;
+    public function __construct(WallpaperService $wallpaperService, Filesystem $filesystem, FileUploader $fileUploader)
+    {
+        $this->wallpaperService = $wallpaperService;
+        $this->filesystem = $filesystem;
+        $this->fileUploader = $fileUploader;
+    }
 
     /**
      * Index action.
      *
-     * @param Request               $request                HTTP Request
-     * @param WallpaperRepository   $wallpaperRepository    Wallpaper repository
-     * @param PaginatorInterface    $paginator              Paginator
+     * @param Request $request HTTP Request
      *
      * @return Response HTTP response
      *
@@ -66,13 +57,10 @@ class WallpaperController extends AbstractController
      *     name="wallpaper_index",
      * )
      */
-    public function index(Request $request, WallpaperRepository $wallpaperRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-        $pagination = $paginator->paginate(
-            $wallpaperRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            WallpaperRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
+        $page = $request->query->getInt('page', 1);
+        $pagination = $this->wallpaperService->createPaginatedList($page);
 
         return $this->render(
             'wallpaper/index.html.twig',
@@ -83,8 +71,8 @@ class WallpaperController extends AbstractController
     /**
      * Show action.
      *
-     * @param Wallpaper             $wallpaper              Wallpaper entity
-     * @param CommentRepository     $commentRepository      Comment Repository
+     * @param Wallpaper         $wallpaper         Wallpaper entity
+     * @param CommentRepository $commentRepository Comment Repository
      *
      * @return Response HTTP response
      *
@@ -101,29 +89,15 @@ class WallpaperController extends AbstractController
             'wallpaper/show.html.twig',
             [
                 'wallpaper' => $wallpaper,
-                'comments' => $commentRepository->findBy(['id' => $wallpaper->getId()])
+                'comments' => $commentRepository->findBy(['id' => $wallpaper->getId()]),
             ]
         );
     }
 
     /**
-     * WallpaperController constructor.
-     *
-     * @param WallpaperRepository       $wallpaperRepository    Wallpaper repository
-     * @param Filesystem                $filesystem             Filesystem component
-     * @param FileUploader              $fileUploader           File uploader
-     */
-    public function __construct(WallpaperRepository $wallpaperRepository, Filesystem $filesystem, FileUploader $fileUploader)
-    {
-        $this->wallpaperRepository = $wallpaperRepository;
-        $this->filesystem = $filesystem;
-        $this->fileUploader = $fileUploader;
-    }
-
-    /**
      * Create action.
      *
-     * @param Request   $request    HTTP request
+     * @param Request $request HTTP request
      *
      * @return Response HTTP response
      *
@@ -149,10 +123,7 @@ class WallpaperController extends AbstractController
                 $form->get('file')->getData()
             );
             $wallpaper->setFilename($wallpaperFilename);
-            $this->wallpaperRepository->save($wallpaper);
-            $this->getDoctrine()->getManager()->persist($form->getData());
-            $this->getDoctrine()->getManager()->flush();
-
+            $this->wallpaperService->save($wallpaper);
             $this->addFlash('success', 'message_created_successfully');
 
             return $this->redirectToRoute('wallpaper_index');
@@ -167,9 +138,8 @@ class WallpaperController extends AbstractController
     /**
      * Edit action.
      *
-     * @param Request               $request                HTTP request
-     * @param Wallpaper             $wallpaper              Wallpaper entity
-     * @param WallpaperRepository   $wallpaperRepository    Wallpaper repository
+     * @param Request   $request   HTTP request
+     * @param Wallpaper $wallpaper Wallpaper entity
      *
      * @return Response HTTP response
      *
@@ -183,7 +153,7 @@ class WallpaperController extends AbstractController
      *     name="wallpaper_edit",
      * )
      */
-    public function edit(Request $request, Wallpaper $wallpaper, WallpaperRepository $wallpaperRepository): Response
+    public function edit(Request $request, Wallpaper $wallpaper): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
 
@@ -191,8 +161,7 @@ class WallpaperController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $wallpaperRepository->save($wallpaper);
-
+            $this->wallpaperService->save($wallpaper);
             $this->addFlash('success', 'message_updated_successfully');
 
             return $this->redirectToRoute('wallpaper_index');
@@ -210,9 +179,8 @@ class WallpaperController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request               $request                HTTP request
-     * @param Wallpaper             $wallpaper              Wallpaper entity
-     * @param WallpaperRepository   $wallpaperRepository    Wallpaper repository
+     * @param Request   $request   HTTP request
+     * @param Wallpaper $wallpaper Wallpaper entity
      *
      * @return Response HTTP response
      *
@@ -226,7 +194,7 @@ class WallpaperController extends AbstractController
      *     name="wallpaper_delete",
      * )
      */
-    public function delete(Request $request, Wallpaper $wallpaper, WallpaperRepository $wallpaperRepository): Response
+    public function delete(Request $request, Wallpaper $wallpaper): Response
     {
         $form = $this->createForm(FormType::class, $wallpaper, ['method' => 'DELETE']);
         $form->handleRequest($request);
@@ -238,7 +206,7 @@ class WallpaperController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $wallpaperRepository->delete($wallpaper);
+            $this->wallpaperService->delete($wallpaper);
             $this->filesystem->remove(
                 $this->getParameter('wallpapers_directory').'/'.$wallpaper->getFilename()
             );
@@ -260,10 +228,14 @@ class WallpaperController extends AbstractController
     /**
      * Comment action.
      *
-     * @param Request       $request        HTTP request
-     * @param Wallpaper     $wallpaper      Wallpaper Entity
+     * @param Request           $request           HTTP request
+     * @param Wallpaper         $wallpaper         Wallpaper Entity
+     * @param CommentRepository $commentRepository Comment Repository
      *
      * @return Response HTTP response
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
      *
      * @Route(
      *     "/{id}/comment",
@@ -271,7 +243,7 @@ class WallpaperController extends AbstractController
      *     methods={"GET", "POST"}
      * )
      */
-    public function comment(Request $request, Wallpaper $wallpaper): Response
+    public function comment(Request $request, Wallpaper $wallpaper, commentRepository $commentRepository): Response
     {
         $comment = new Comment();
 
@@ -280,8 +252,7 @@ class WallpaperController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setWallpaper($wallpaper);
-            $this->getDoctrine()->getManager()->persist($comment);
-            $this->getDoctrine()->getManager()->flush();
+            $commentRepository->save($comment);
 
             $this->addFlash('success', 'message_created_successfully');
 
@@ -301,8 +272,8 @@ class WallpaperController extends AbstractController
     /**
      * Delete comment action.
      *
-     * @param Request $request HTTP request
-     * @param Comment $comment Comment entity
+     * @param Request           $request           HTTP request
+     * @param Comment           $comment           Comment entity
      * @param CommentRepository $commentRepository Comment repository
      *
      * @return Response HTTP response
@@ -317,7 +288,7 @@ class WallpaperController extends AbstractController
      *     name="wallpaper_comment_delete",
      * )
      */
-    public function comment_delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
+    public function commentdelete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
         $this->denyAccessUnlessGranted(User::ROLE_ADMIN);
 
@@ -341,4 +312,29 @@ class WallpaperController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * Wallpaper repository.
+     */
+    private WallpaperRepository $wallpaperRepository;
+
+    /**
+     * File uploader.
+     */
+    private FileUploader $fileUploader;
+
+    /**
+     * Filesystem component.
+     */
+    private Filesystem $filesystem;
+
+    /**
+     * Comment repository.
+     */
+    private CommentRepository $commentRepository;
+
+    /**
+     * Wallpaper service.
+     */
+    private WallpaperService $wallpaperService;
 }

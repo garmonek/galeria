@@ -95,7 +95,7 @@ class Comment
      *
      * @return int|null
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -114,6 +114,8 @@ class Comment
      * Setter for createdAt.
      *
      * @param DateTimeInterface $createdAt Created at
+     *
+     * @return Comment Comment
      */
     public function setCreatedAt(DateTimeInterface $createdAt): self
     {
@@ -125,7 +127,7 @@ class Comment
     /**
      * Getter for Content.
      *
-     * @return string|null
+     * @return $this
      */
     public function getContent(): ?string
     {
@@ -135,7 +137,8 @@ class Comment
     /**
      * Setter for Content.
      *
-     * @param string $content
+     * @param string $content content
+     *
      * @return $this
      */
     public function setContent(string $content): self
@@ -148,7 +151,7 @@ class Comment
     /**
      * Getter for Email.
      *
-     * @return string|null
+     * @return $this
      */
     public function getEmail(): ?string
     {
@@ -158,7 +161,8 @@ class Comment
     /**
      * Setter for Email.
      *
-     * @param string $email
+     * @param string $email email
+     *
      * @return $this
      */
     public function setEmail(string $email): self
@@ -171,7 +175,7 @@ class Comment
     /**
      * Getter for Nick.
      *
-     * @return string|null
+     * @return $this
      */
     public function getNick(): ?string
     {
@@ -181,7 +185,8 @@ class Comment
     /**
      * Setter for Nick.
      *
-     * @param string $nick
+     * @param string $nick Nick
+     *
      * @return $this
      */
     public function setNick(string $nick): self
@@ -196,7 +201,7 @@ class Comment
      *
      * @return Wallpaper|null
      */
-    public function getWallpaper(): ?Wallpaper
+    public function getWallpaper(): Wallpaper
     {
         return $this->wallpaper;
     }
@@ -204,7 +209,8 @@ class Comment
     /**
      * Setter for Wallpaper.
      *
-     * @param Wallpaper|null $wallpaper
+     * @param Wallpaper|null $wallpaper Wallpaper
+     *
      * @return $this
      */
     public function setWallpaper(?Wallpaper $wallpaper): self
@@ -219,7 +225,7 @@ class Comment
      *
      * @return int|null
      */
-    public function getWallpaperId(): ?int
+    public function getWallpaperId(): int
     {
         return $this->wallpaperId;
     }
@@ -227,7 +233,7 @@ class Comment
     /**
      * Setter for WallpaperId.
      *
-     * @param int $wallpaperId
+     * @param int $wallpaperId Wallpaper Id
      *
      * @return $this
      */

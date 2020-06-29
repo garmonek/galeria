@@ -16,24 +16,24 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Security;
 
 /**
- * Class AdminController
- * @package App\Controller
+ * Class AdminController.
  */
 class AdminController extends AbstractController
 {
     /**
      * Edit action.
      *
-     * @param Request                           $request            HTTP request
-     * @param Security                          $security           Security
-     * @param User                              $user               User entity
-     * @param UserRepository                    $userRepository     User repository
-     * @param UserPasswordEncoderInterface      $passwordEncoder    Password encoder
+     * @param Request                      $request         HTTP request
+     * @param Security                     $security        Security
+     * @param User                         $user            User entity
+     * @param UserRepository               $userRepository  User repository
+     * @param UserPasswordEncoderInterface $passwordEncoder Password encoder
      *
      * @return Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/admin/edit/{id}",
      *     methods={"GET", "PUT"},

@@ -180,7 +180,7 @@ class Category
     /**
      * Adder Wallpapers.
      *
-     * @param Wallpaper $wallpaper
+     * @param Wallpaper $wallpaper Wallpaper
      * @return $this
      */
     public function addWallpaper(Wallpaper $wallpaper): self
@@ -196,7 +196,7 @@ class Category
     /**
      * Removal Wallpapers.
      *
-     * @param Wallpaper $wallpaper
+     * @param Wallpaper $wallpaper Wallpaper
      * @return $this
      */
     public function removeWallpaper(Wallpaper $wallpaper): self

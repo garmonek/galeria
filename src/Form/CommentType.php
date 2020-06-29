@@ -20,8 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CommentType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param FormBuilderInterface $builder Builder
+     * @param array                $options Options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -51,7 +51,7 @@ class CommentType extends AbstractType
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @param OptionsResolver $resolver Resolver
      */
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -70,7 +70,7 @@ return [
         349 => [[['_route' => 'wallpaper_delete', '_controller' => 'App\\Controller\\WallpaperController::delete'], ['id'], ['GET' => 0, 'DELETE' => 1], null, false, false, null]],
         373 => [[['_route' => 'wallpaper_comment', '_controller' => 'App\\Controller\\WallpaperController::comment'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
         406 => [
-            [['_route' => 'wallpaper_comment_delete', '_controller' => 'App\\Controller\\WallpaperController::comment_delete'], ['id'], ['DELETE' => 0, 'GET' => 1], null, false, false, null],
+            [['_route' => 'wallpaper_comment_delete', '_controller' => 'App\\Controller\\WallpaperController::commentdelete'], ['id'], ['DELETE' => 0, 'GET' => 1], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],
     ],

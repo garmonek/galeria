@@ -1,4 +1,7 @@
 <?php
+/**
+ * Security Controller.
+ */
 
 namespace App\Controller;
 
@@ -8,15 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
- * Class SecurityController
- * @package App\Controller
+ * Class SecurityController.
  */
 class SecurityController extends AbstractController
 {
     /**
-     * @param AuthenticationUtils    $authenticationUtils   AuthenticationUtils
+     * @param AuthenticationUtils $authenticationUtils AuthenticationUtils
      *
-     * @return Response
+     * @return Response response
      *
      * @Route(
      *     "/login",

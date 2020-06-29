@@ -30,5 +30,5 @@ return [
     'wallpaper_edit' => [['id'], ['_controller' => 'App\\Controller\\WallpaperController::edit'], ['id' => '[1-9]\\d*'], [['text', '/edit'], ['variable', '/', '[1-9]\\d*', 'id'], ['text', '/wallpaper']], [], []],
     'wallpaper_delete' => [['id'], ['_controller' => 'App\\Controller\\WallpaperController::delete'], ['id' => '[1-9]\\d*'], [['text', '/delete'], ['variable', '/', '[1-9]\\d*', 'id'], ['text', '/wallpaper']], [], []],
     'wallpaper_comment' => [['id'], ['_controller' => 'App\\Controller\\WallpaperController::comment'], [], [['text', '/comment'], ['variable', '/', '[^/]++', 'id'], ['text', '/wallpaper']], [], []],
-    'wallpaper_comment_delete' => [['id'], ['_controller' => 'App\\Controller\\WallpaperController::comment_delete'], ['id' => '[1-9]\\d*'], [['text', '/comment/delete'], ['variable', '/', '[1-9]\\d*', 'id'], ['text', '/wallpaper']], [], []],
+    'wallpaper_comment_delete' => [['id'], ['_controller' => 'App\\Controller\\WallpaperController::commentdelete'], ['id' => '[1-9]\\d*'], [['text', '/comment/delete'], ['variable', '/', '[1-9]\\d*', 'id'], ['text', '/wallpaper']], [], []],
 ];

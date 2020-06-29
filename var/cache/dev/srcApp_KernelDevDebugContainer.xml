@@ -126,7 +126,7 @@
     <parameter key="kernel.secret">%env(APP_SECRET)%</parameter>
     <parameter key="kernel.http_method_override">true</parameter>
     <parameter key="kernel.trusted_hosts" type="collection"/>
-    <parameter key="kernel.default_locale">en</parameter>
+    <parameter key="kernel.default_locale">pl</parameter>
     <parameter key="kernel.error_controller">error_controller</parameter>
     <parameter key="templating.helper.code.file_link_format">null</parameter>
     <parameter key="debug.file_link_format">null</parameter>
@@ -408,6 +408,7 @@
     <service id="App\Controller\CategoryController" class="App\Controller\CategoryController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
+      <argument type="service" id="App\Service\CategoryService"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.vdmMuyE.App\Controller\CategoryController"/>
       </call>
@@ -429,7 +430,7 @@
     <service id="App\Controller\WallpaperController" class="App\Controller\WallpaperController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
-      <argument type="service" id="App\Repository\WallpaperRepository"/>
+      <argument type="service" id="App\Service\WallpaperService"/>
       <argument type="service" id="filesystem"/>
       <argument type="service" id="App\Service\FileUploader"/>
       <call method="setContainer">
@@ -478,8 +479,16 @@
       <argument type="service" id="security.csrf.token_manager"/>
       <argument type="service" id="security.user_password_encoder.generic"/>
     </service>
+    <service id="App\Service\CategoryService" class="App\Service\CategoryService" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Repository\CategoryRepository"/>
+      <argument type="service" id="knp_paginator"/>
+    </service>
     <service id="App\Service\FileUploader" class="App\Service\FileUploader" autowire="true" autoconfigure="true">
       <argument>C:\Users\DELL XPS\PhpstormProjects\PROJEKT/public/images</argument>
+    </service>
+    <service id="App\Service\WallpaperService" class="App\Service\WallpaperService" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Repository\WallpaperRepository"/>
+      <argument type="service" id="knp_paginator"/>
     </service>
     <service id=".legacy_controller_name_converter" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser" public="false">
       <tag name="monolog.logger" channel="request"/>
@@ -502,7 +511,7 @@
       <tag name="container.hot_path"/>
       <tag name="container.hot_path"/>
       <argument type="service" id="request_stack"/>
-      <argument>en</argument>
+      <argument>pl</argument>
       <argument type="service" id="router.default" on-invalid="ignore"/>
     </service>
     <service id="validate_request_listener" class="Symfony\Component\HttpKernel\EventListener\ValidateRequestListener" public="false">
@@ -859,7 +868,7 @@
       <argument type="service" id="translation.writer"/>
       <argument type="service" id="translation.reader"/>
       <argument type="service" id="translation.extractor"/>
-      <argument>en</argument>
+      <argument>pl</argument>
       <argument>C:\Users\DELL XPS\PhpstormProjects\PROJEKT/translations</argument>
       <argument>C:\Users\DELL XPS\PhpstormProjects\PROJEKT/templates</argument>
       <argument type="collection">
@@ -1487,7 +1496,7 @@
       <tag name="kernel.locale_aware"/>
       <argument type="service" id=".service_locator.V.o0zE7"/>
       <argument type="service" id="translator.formatter.default"/>
-      <argument>en</argument>
+      <argument>pl</argument>
       <argument type="collection">
         <argument key="translation.loader.php" type="collection">
           <argument>php</argument>
@@ -2924,7 +2933,7 @@
       <argument type="service" id="router.request_context" on-invalid="ignore"/>
       <argument type="service" id="parameter_bag" on-invalid="ignore"/>
       <argument type="service" id="monolog.logger.router" on-invalid="ignore"/>
-      <argument>en</argument>
+      <argument>pl</argument>
       <call method="setConfigCacheFactory">
         <argument type="service" id="config_cache_factory"/>
       </call>
@@ -5550,30 +5559,10 @@
         <argument key="userRepository" type="service" id="App\Repository\UserRepository"/>
       </argument>
     </service>
-    <service id=".service_locator..vCYKbM" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="categoryRepository" type="service" id="App\Repository\CategoryRepository"/>
-        <argument key="paginator" type="service" id="knp_paginator"/>
-      </argument>
-    </service>
     <service id=".service_locator.BljtxGn" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="category" type="service" id=".errored..service_locator.BljtxGn.App\Entity\Category"/>
-      </argument>
-    </service>
-    <service id=".service_locator.CvFKf6j" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="categoryRepository" type="service" id="App\Repository\CategoryRepository"/>
-      </argument>
-    </service>
-    <service id=".service_locator.linS56O" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="category" type="service" id=".errored..service_locator.linS56O.App\Entity\Category"/>
-        <argument key="categoryRepository" type="service" id="App\Repository\CategoryRepository"/>
       </argument>
     </service>
     <service id=".service_locator.g.xob4v" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
@@ -5582,25 +5571,11 @@
         <argument key="authenticationUtils" type="service" id="security.authentication_utils"/>
       </argument>
     </service>
-    <service id=".service_locator.soD764N" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="paginator" type="service" id="knp_paginator"/>
-        <argument key="wallpaperRepository" type="service" id="App\Repository\WallpaperRepository"/>
-      </argument>
-    </service>
     <service id=".service_locator.9lxu63r" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="commentRepository" type="service" id="App\Repository\CommentRepository"/>
         <argument key="wallpaper" type="service" id=".errored..service_locator.9lxu63r.App\Entity\Wallpaper"/>
-      </argument>
-    </service>
-    <service id=".service_locator.HgBdxxC" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="wallpaper" type="service" id=".errored..service_locator.HgBdxxC.App\Entity\Wallpaper"/>
-        <argument key="wallpaperRepository" type="service" id="App\Repository\WallpaperRepository"/>
       </argument>
     </service>
     <service id=".service_locator.r4mLUIl" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
@@ -5616,34 +5591,28 @@
         <argument key="commentRepository" type="service" id="App\Repository\CommentRepository"/>
       </argument>
     </service>
-    <service id=".service_locator.4GW352." class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.MvvEtVV" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\AdminController::edit" type="service" id=".service_locator.oRman9s"/>
-        <argument key="App\Controller\CategoryController::create" type="service" id=".service_locator.CvFKf6j"/>
-        <argument key="App\Controller\CategoryController::delete" type="service" id=".service_locator.linS56O"/>
-        <argument key="App\Controller\CategoryController::edit" type="service" id=".service_locator.linS56O"/>
-        <argument key="App\Controller\CategoryController::index" type="service" id=".service_locator..vCYKbM"/>
+        <argument key="App\Controller\CategoryController::delete" type="service" id=".service_locator.BljtxGn"/>
+        <argument key="App\Controller\CategoryController::edit" type="service" id=".service_locator.BljtxGn"/>
         <argument key="App\Controller\CategoryController::show" type="service" id=".service_locator.BljtxGn"/>
         <argument key="App\Controller\SecurityController::login" type="service" id=".service_locator.g.xob4v"/>
-        <argument key="App\Controller\WallpaperController::comment" type="service" id=".service_locator.r4mLUIl"/>
-        <argument key="App\Controller\WallpaperController::comment_delete" type="service" id=".service_locator.7Jfl7Eg"/>
-        <argument key="App\Controller\WallpaperController::delete" type="service" id=".service_locator.HgBdxxC"/>
-        <argument key="App\Controller\WallpaperController::edit" type="service" id=".service_locator.HgBdxxC"/>
-        <argument key="App\Controller\WallpaperController::index" type="service" id=".service_locator.soD764N"/>
+        <argument key="App\Controller\WallpaperController::comment" type="service" id=".service_locator.9lxu63r"/>
+        <argument key="App\Controller\WallpaperController::commentdelete" type="service" id=".service_locator.7Jfl7Eg"/>
+        <argument key="App\Controller\WallpaperController::delete" type="service" id=".service_locator.r4mLUIl"/>
+        <argument key="App\Controller\WallpaperController::edit" type="service" id=".service_locator.r4mLUIl"/>
         <argument key="App\Controller\WallpaperController::show" type="service" id=".service_locator.9lxu63r"/>
         <argument key="App\Controller\AdminController:edit" type="service" id=".service_locator.oRman9s"/>
-        <argument key="App\Controller\CategoryController:create" type="service" id=".service_locator.CvFKf6j"/>
-        <argument key="App\Controller\CategoryController:delete" type="service" id=".service_locator.linS56O"/>
-        <argument key="App\Controller\CategoryController:edit" type="service" id=".service_locator.linS56O"/>
-        <argument key="App\Controller\CategoryController:index" type="service" id=".service_locator..vCYKbM"/>
+        <argument key="App\Controller\CategoryController:delete" type="service" id=".service_locator.BljtxGn"/>
+        <argument key="App\Controller\CategoryController:edit" type="service" id=".service_locator.BljtxGn"/>
         <argument key="App\Controller\CategoryController:show" type="service" id=".service_locator.BljtxGn"/>
         <argument key="App\Controller\SecurityController:login" type="service" id=".service_locator.g.xob4v"/>
-        <argument key="App\Controller\WallpaperController:comment" type="service" id=".service_locator.r4mLUIl"/>
-        <argument key="App\Controller\WallpaperController:comment_delete" type="service" id=".service_locator.7Jfl7Eg"/>
-        <argument key="App\Controller\WallpaperController:delete" type="service" id=".service_locator.HgBdxxC"/>
-        <argument key="App\Controller\WallpaperController:edit" type="service" id=".service_locator.HgBdxxC"/>
-        <argument key="App\Controller\WallpaperController:index" type="service" id=".service_locator.soD764N"/>
+        <argument key="App\Controller\WallpaperController:comment" type="service" id=".service_locator.9lxu63r"/>
+        <argument key="App\Controller\WallpaperController:commentdelete" type="service" id=".service_locator.7Jfl7Eg"/>
+        <argument key="App\Controller\WallpaperController:delete" type="service" id=".service_locator.r4mLUIl"/>
+        <argument key="App\Controller\WallpaperController:edit" type="service" id=".service_locator.r4mLUIl"/>
         <argument key="App\Controller\WallpaperController:show" type="service" id=".service_locator.9lxu63r"/>
       </argument>
     </service>
@@ -6108,12 +6077,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.4GW352."/>
+      <argument type="service" id=".service_locator.MvvEtVV"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.4GW352."/>
+      <argument type="service" id=".service_locator.MvvEtVV"/>
     </service>
     <service id=".debug.http_client.inner" class="Symfony\Contracts\HttpClient\HttpClientInterface" public="false">
       <argument type="collection"/>
@@ -6125,9 +6094,7 @@
     </service>
     <service id=".errored..service_locator.oRman9s.App\Entity\User" class="App\Entity\User"/>
     <service id=".errored..service_locator.BljtxGn.App\Entity\Category" class="App\Entity\Category"/>
-    <service id=".errored..service_locator.linS56O.App\Entity\Category" class="App\Entity\Category"/>
     <service id=".errored..service_locator.9lxu63r.App\Entity\Wallpaper" class="App\Entity\Wallpaper"/>
-    <service id=".errored..service_locator.HgBdxxC.App\Entity\Wallpaper" class="App\Entity\Wallpaper"/>
     <service id=".errored..service_locator.r4mLUIl.App\Entity\Wallpaper" class="App\Entity\Wallpaper"/>
     <service id=".errored..service_locator.7Jfl7Eg.App\Entity\Comment" class="App\Entity\Comment"/>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
@@ -6528,7 +6495,7 @@
     <service id="Knp\Component\Pager\PaginatorInterface" alias="knp_paginator"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.CmORmuK" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.4GW352."/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.MvvEtVV"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
     <service id="Psr\Log\LoggerInterface $consoleLogger" alias="monolog.logger.console"/>

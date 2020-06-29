@@ -146,6 +146,8 @@ class Wallpaper
      * Setter for Filename.
      *
      * @param string $filename Filename
+     *
+     * @return Wallpaper
      */
     public function setFilename(string $filename): self
     {
@@ -188,6 +190,8 @@ class Wallpaper
      * Setter for createdAt.
      *
      * @param \DateTimeInterface $createdAt Created at
+     *
+     * @return Wallpaper
      */
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
@@ -210,6 +214,8 @@ class Wallpaper
      * Setter for updatedAt.
      *
      * @param \DateTimeInterface|null $updatedAt Updated at
+     *
+     * @return Wallpaper
      */
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
@@ -221,7 +227,7 @@ class Wallpaper
     /**
      * Getter for Category.
      *
-     * @return Category|null
+     * @return $this
      */
     public function getCategory(): ?Category
     {
@@ -232,9 +238,10 @@ class Wallpaper
      * Setter for Category.
      *
      * @param Category|null $category
+     *
      * @return $this
      */
-    public function setCategory(?Category $category): self
+    public function setCategory(Category $category): self
     {
         $this->category = $category;
 
@@ -245,6 +252,7 @@ class Wallpaper
      * Getter for Description.
      *
      * @return string|null
+     * @return $this
      */
     public function getDescription(): ?string
     {
@@ -254,7 +262,8 @@ class Wallpaper
     /**
      * Setter for Description.
      *
-     * @param string|null $description
+     * @param string|null $description Description
+     *
      * @return $this
      */
     public function setDescription(?string $description): self
@@ -277,7 +286,8 @@ class Wallpaper
     /**
      * Adder for Comment.
      *
-     * @param Comment $comment
+     * @param Comment $comment Comment
+     *
      * @return $this
      */
     public function addComment(Comment $comment): self
@@ -293,7 +303,8 @@ class Wallpaper
     /**
      * Remover for Comment.
      *
-     * @param Comment $comment
+     * @param Comment $comment Comment
+     *
      * @return $this
      */
     public function removeComment(Comment $comment): self
